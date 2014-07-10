@@ -1,0 +1,25 @@
+.box-model {
+    border: 1px solid red;
+    padding: 20px;
+}
+
+.box-model div {
+    border: 1px solid red;
+    padding: 20px;
+}
+
+
+
+//  ## MODULE MEDIA QUERIES  --------------------------------------------------------*/
+
+@media screen and (min-width: $breakpoint-small) {
+
+}
+
+@media screen and (min-width: $breakpoint-medium) {
+
+}
+
+@media screen and (min-width: $breakpoint-large) {
+
+}

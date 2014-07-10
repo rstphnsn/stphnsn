@@ -1,0 +1,143 @@
+footer {
+    background-color: #333;
+    border-top: 1px solid black;
+    margin: 5px 0 0;
+    padding: 15px;
+}
+
+footer .footer-inner {
+    margin: 0 auto;
+    min-width: 280px;
+    max-width: $container-medium;
+    position: relative;
+}
+
+footer .book-now {
+
+    ul {
+        margin-top: 0;
+    }
+
+    li {
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        background-color: lighten(#666, 10%);
+        border-bottom: 1px solid #000;
+        border-radius: 3px;
+        color: white;
+        display: block;
+        font-size: 15px;
+        font-weight: 400;
+        letter-spacing: 0.04em;
+        //background-image: linear-gradient(lighten(#666, 10%), #666);
+        padding: 17px 0 16px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .btn-airbnb {
+        background-color: #2badf3;
+        //background-image: linear-gradient(#2badf3, #2492db);
+    }
+}
+
+footer a {
+    color: lighten(#0059B2, 10%);
+    outline: none !important;
+    text-decoration: none;
+}
+
+footer ul {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+footer li {
+    font-weight: 300;
+    line-height: 22px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+footer li a {
+    color: #CCC;
+}
+
+footer li span {
+    color: #999;
+}
+
+footer .copyright {
+    display: none;
+}
+
+
+//  ## MODULE MEDIA QUERIES  --------------------------------------------------------*/
+
+@media screen and (min-width: $breakpoint-small) {
+
+    footer {
+        padding: 30px;
+        position: relative;
+        z-index: 2;
+    }
+
+    footer .contacts ul {
+        margin: 30px 0 0;
+    }
+}
+
+@media screen and (min-width: $breakpoint-medium) {
+
+    footer {
+        background-color: $color-page-base;
+        border-top: 1px solid darken($color-page-base, 10%);
+        margin: 30px auto 0;
+        max-width: $container-medium;
+        padding: 0 0 30px;
+    }
+
+    footer .book-phone {
+        display: none;
+    }
+
+    footer .book-airbnb {
+        float: right;
+    }
+
+    footer .book-airbnb .btn {
+        border-bottom: 0;
+        background: transparent;
+        display: inline;
+        color: #0059B2;
+    }
+
+
+    footer li a {
+        color: #0059B2;
+    }
+
+    footer li span {
+        color: #000;
+    }
+}
+
+@media screen and (min-width: $breakpoint-large) {
+
+    footer {
+        margin-top: 60px;
+        max-width: $container-large;
+    }
+
+    footer .footer-inner {
+        max-width: $container-large;
+    }
+
+    footer .footer-inner li {
+        font-size: 14px;
+        line-height: 22px;
+    }
+}

@@ -1,0 +1,136 @@
+/*  ## NAVIGATION  ------------------------------------------------------------------*/
+
+.menu {
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.js .menu {
+    height: 0;
+    transition: height .25s ease-out;
+}
+
+.js .show-menu .menu {
+    height: 275px;
+}
+
+.menu ul {
+    background-color: rgba(51, 51, 51, 1);
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    @extend %serif;
+    border-bottom: 1px #111 solid;
+    font-size: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu a {
+    color: #CCC;
+    display: block;
+    letter-spacing: 2px;
+    line-height: 40px;
+    padding: 0 10px;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.no-touch .menu a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.page-home .nav-home a,
+.page-the-cottage .nav-the-cottage a,
+.page-the-stables .nav-the-stables a,
+.page-about-the-village .nav-about-the-village a,
+.page-things-to-do .nav-things-to-do a,
+.page-getting-here .nav-getting-here a {
+    background-color: rgba(255, 255, 255, 0.10) !important;
+    color: #FFF;
+}
+
+
+//  ## MODULE MEDIA QUERIES  --------------------------------------------------------*/
+
+@media screen and (min-width: $breakpoint-medium) {
+
+    .menu {
+        -moz-transition: 0;
+        -webkit-transition: 0;
+        left: 0;
+        min-height: 100%;
+        position: fixed;
+        top: 0;
+        transition: 0;
+        width: 100%;
+    }
+
+    .menu ul {
+        height: 4000px;
+        position: fixed;
+        width: 220px;
+    }
+}
+
+@media screen and (min-width: $breakpoint-large) {
+
+    body {
+        background-color: $color-page-base;
+        padding-left: 0;
+    }
+
+    .menu,
+    .js .menu {
+        border-bottom: 1px solid darken($color-page-base, 10%);
+        height: auto;
+        margin: 0 auto 30px;
+        min-height: 0;
+        padding: 24px 0 15px;
+        position: static;
+        text-align: center;
+        top: auto;
+        width: $container-large;
+    }
+
+    .menu ul {
+        background-color: transparent;
+        display: inline-block;
+        height: auto;
+        position: static;
+        width: auto;
+    }
+
+    .menu li {
+        border: 0;
+        float: left;
+        padding: 0 15px;
+        width: auto;
+    }
+
+    .menu a {
+        color: black;
+        padding: 0;
+        line-height: 25px;
+        color: darken($color-page-base, 85%);
+        font-size: 13px;
+        letter-spacing: 0.05em;
+    }
+
+    .page-home .nav-home a,
+    .page-the-cottage .nav-the-cottage a,
+    .page-the-stables .nav-the-stables a,
+    .page-about-the-village .nav-about-the-village a,
+    .page-things-to-do .nav-things-to-do a,
+    .page-getting-here .nav-getting-here a {
+        background-color: transparent !important;
+        color: darken($color-page-base, 25%);
+        font-weight: normal;
+        position: relative;
+    }
+}

@@ -1,0 +1,91 @@
+%serif {
+    font-family: "EB Garamond", Georgia, sans-serif;
+}
+
+%sans-serif {
+    font-family: Helvetica, Roboto, Arial, sans-serif;
+    font-weight: 300;
+}
+
+figure {
+    margin: 0 0 10px;
+}
+
+p {
+    @extend %sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 0 15px;
+}
+
+ul {
+    margin: 0 0 10px;
+    padding: 0 15px;
+}
+
+li {
+    @extend %sans-serif;
+    font-size: 14px;
+    line-height: 15px;
+    margin: 0 0 5px 30px;
+    padding: 0;
+}
+
+h2 {
+    //@extend %sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 20px;
+    margin: 0 0 20px;
+}
+
+h2 + figure {
+    margin-top: 15px;
+}
+
+h3 {
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 0 10px;
+}
+
+section a,
+footer a {
+    color: #0059B2;
+    text-decoration: none;
+    outline: none !important;
+}
+
+section a:focus,
+section a:active,
+section a:hover,
+footer a:focus,
+footer a:active,
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+//Modules stuff needs moving
+
+
+//  ## MODULE MEDIA QUERIES  --------------------------------------------------------*/
+
+@media screen and (min-width: $breakpoint-medium) {
+
+}
+
+@media screen and (min-width: $breakpoint-large) {
+
+    p {
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    li {
+        font-size: 20px;
+        line-height: 30px;
+        margin: 0 0 5px 30px;
+    }
+}
+

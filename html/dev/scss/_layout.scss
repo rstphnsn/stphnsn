@@ -1,0 +1,137 @@
+/*  ## LAYOUT  ----------------------------------------------------------------------*/
+
+html {
+    background-color: $color-page-base;
+    height: 100%;
+}
+
+.container {
+    background-color: $color-page-base;
+    min-height: 100%;
+    overflow-x: hidden; // Prevents horizontal scroll when nav is visible
+}
+
+.page {
+    background-color: $color-page-base;
+    height: 100%;
+    left: 0;
+    margin-left: 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.main {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+    min-height: 400px;
+}
+
+.content {
+    padding: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.js.csstransitions .content section {
+    opacity: 0;
+    transform: translate(0, 50px);
+    transition: opacity 1s, transform 1s;
+}
+
+.js.csstransitions .content footer {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.js.csstransitions .content.destroy section,
+.js.csstransitions .content.destroy footer {
+    opacity: 0;
+}
+
+.js.csstransitions .content.new section,
+.js.csstransitions .content.new footer {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+.js.csstransitions .content.loaded section {
+    opacity: 1;
+    transform: translate(0, 0);
+    transition: opacity 1s 0.1s, transform 1s 0.1s;
+}
+
+.js.csstransitions .content.loaded footer {
+    opacity: 1;
+    transition: opacity 1s 0.7s;
+}
+
+section {
+    margin: 0 auto;
+    max-width: $container-medium;
+    min-width: 280px;
+    padding: 0;
+}
+
+figure img {
+    height: auto;
+    width: 100%;
+}
+
+
+@media screen and (min-height: 400px) {
+
+    .main {
+        min-height: 500px;
+    }
+}
+
+
+
+@media screen and (min-width: $breakpoint-small) {
+
+    .content {
+        padding: 0 15px;
+    }
+}
+
+@media screen and (min-width: $breakpoint-medium) {
+
+    html {
+        //background-color: #333;
+        height: 100%;
+    }
+
+    body {
+        background-color: #333;
+        height: 100%;
+        min-height: 100%;
+        padding-left: 220px;
+    }
+}
+
+@media screen and (min-width: $breakpoint-large) {
+
+    html {
+        background-color: $color-page-base;;
+        height: 100%;
+    }
+
+    body {
+        background-color: $color-page-base;;
+        height: 100%;
+        min-height: 100%;
+        padding-left: 0;
+    }
+
+    section {
+        max-width: $container-large;
+        width: $container-large;
+    }
+
+    .content {
+        padding: 0;
+    }
+}

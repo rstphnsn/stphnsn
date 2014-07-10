@@ -1,0 +1,56 @@
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.loading .container::after {
+    -moz-animation-duration: 1.0s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-name: rotate;
+    -moz-animation-timing-function: linear;
+    -ms-animation-duration: 1.0s;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-name: rotate;
+    -ms-animation-timing-function: linear;
+    -webkit-animation-duration: 1.0s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: rotate;
+    -webkit-animation-timing-function: linear;
+    animation-duration: 1.0s;
+    animation-iteration-count: infinite;
+    animation-name: rotate;
+    animation-timing-function: linear;
+    background: transparent url("/assets/images/spinner.png") 0 0 no-repeat;
+    background-size: 40px 40px;
+    content: '';
+    display: block;
+    height: 40px;
+    left: 50%;
+    margin: -20px 0 0 -20px;
+    opacity: 0.2;
+    position: absolute;
+    top: 300px;
+    width: 40px;
+    z-index: 0;
+}
+
+@media screen and (min-width: $breakpoint-medium) {
+
+    .loading .container::after {
+        margin-left: 90px;
+    }
+}
+
+@media screen and (min-width: $breakpoint-large) {
+
+    .loading .container::after {
+        margin-left: -20px;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
