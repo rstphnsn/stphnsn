@@ -1,4 +1,0 @@
-RewriteEngine on
-RewriteCond $1 !^(images|backend|assets|templates|themes|js|google21daa5eb921c64dc\.html|css|stuff|favicon\.ico|robots\.txt|sitemap\.xml|index\.php) [NC]
-RewriteRule ^(.*)$ /index.php/$1 [L]
-AddHandler php-legacy .php

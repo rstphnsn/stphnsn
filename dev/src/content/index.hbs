@@ -1,0 +1,39 @@
+---
+section: "Home"
+page: "home"
+bodyclass: "page-home"
+title: "Home"
+
+published: true
+layout: page.hbs
+---
+<div class="content">
+    <h1>Richard Stephenson</h1>
+    <h2>Website Design</h2>
+</div>
+
+
+
+<!--<canvas id="circle" width="1000" height="500" class="start"></canvas>-->
+
+<script>
+
+var loop = (function () {
+    var canvas = document.getElementById('circle'),
+        context = canvas.getContext('2d'),
+        centerX = canvas.width / 2,
+        centerY = canvas.height,
+        radius = 500;
+    for (i = 0; i < 35; i++) {
+        context.beginPath();
+        context.arc(centerX, centerY, radius - (i * 10), 0, 2 * Math.PI, false);
+        context.lineWidth = 0.5;
+        context.strokeStyle = '#999';
+        context.stroke();
+    }
+    window.setTimeout(function () {
+        canvas.className = ''
+    },300)
+})();
+
+</script>
