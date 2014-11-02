@@ -17,12 +17,6 @@ logs/
 # SASS Cache files
 .sass-cache/
 
-# Generated CSS files
-html/assets/css/*.css
-
-# Generated JS Files
-html/assets/js/*.js
-
 html
 
 
