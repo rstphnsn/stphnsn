@@ -134,7 +134,7 @@ module.exports = function (grunt) {
                 dest: 'html/assets/js/app.min.js'
             },
             libs: {
-                src: ['dev/js/libs.js', 'dev/js/libs/*.js', '!dev/js/libs/jquery-*.js', '!dev/js/libs/modernizr.js'],
+                src: ['dev/js/libs.js', 'dev/js/libs/*.js', '!dev/js/libs/modernizr.js'],
                 dest: 'html/assets/js/libs.min.js'
             }
         },
@@ -144,16 +144,12 @@ module.exports = function (grunt) {
               separator: ';',
             },
             js: {
-                src: ['html/assets/js/jquery.js', 'html/assets/js/app.min.js', 'html/assets/js/libs.min.js'],
+                src: ['html/assets/js/app.min.js', 'html/assets/js/libs.min.js'],
                 dest: 'html/assets/js/scripts.min.js'
             }
         },
 
         copy: {
-            jquery: {
-                src: ['dev/js/libs/jquery-*.js'],
-                dest: 'html/assets/js/jquery.js'
-            },
             images: {
                 expand: true,
                 cwd: 'dev/images/',
@@ -179,7 +175,7 @@ module.exports = function (grunt) {
                 src: ['dev/js/modules/*.js','dev/js/pages/*.js'],
                 options: {
                     specs: 'dev/js/tests/*.spec.js',
-                    vendor: ['html/assets/js/modernizr.custom.js','html/assets/js/jquery.js','html/assets/js/libs.min.js'],
+                    vendor: ['html/assets/js/modernizr.custom.js','html/assets/js/libs.min.js'],
                     helpers: 'dev/js/tests/*.helper.js'
                 }
             }
@@ -207,7 +203,6 @@ module.exports = function (grunt) {
                 options: {
                     cache: [
                         'html/assets/images/spinner.png',
-                        'html/assets/js/jquery.js',
                         'html/assets/js/modernizr.custom.js',
                         'html/assets/js/app.min.js',
                         'html/assets/css/styles.css'
@@ -232,16 +227,15 @@ module.exports = function (grunt) {
                 dest: 'mfc.appcache'
             }
         }
-
     });
 
     // With AppCache
     //grunt.registerTask('bust-appCache', ['manifest']);
-    //grunt.registerTask('js', ['clean:js', 'copy:jquery', 'uglify', 'bust-appCache']);
+    //grunt.registerTask('js', ['clean:js', 'uglify', 'bust-appCache']);
     //grunt.registerTask('scss', ['clean:css', 'sass:prod', 'bust-appCache']);
 
     // No AppCache
-    grunt.registerTask('js', ['coffee:compile', 'jshint', 'jasmine', 'clean:js', 'copy:jquery', 'uglify:js', 'uglify:libs', 'modernizr', 'concat:js']);
+    grunt.registerTask('js', ['coffee:compile', 'clean:js', 'uglify:js', 'uglify:libs', 'modernizr', 'concat:js']);
     grunt.registerTask('scss', ['clean:css', 'sass:prod', 'autoprefixer:site', 'modernizr']);
 
     grunt.registerTask('images', ['clean:images', 'copy:images']);
