@@ -1,40 +1,103 @@
 //  ## MODULE - NAVIGATION  ---------------------------------------------------------//
 
+
+#sidebar {
+    position: fixed;
+    right: 0;
+    transform: translate3d(200px, 0, 0);
+    transition: transform 0.3s 0.05s;
+    top: 0;
+    width: 200px;
+}
+
+.show-menu #sidebar {
+    transform: translate3d(0, 0, 0);
+}
+
 nav ul {
+    padding: 68px 0 0;
     margin: 0;
-    padding: 0;
 }
 
 nav li {
-    background-color: #EEE;
     list-style: none;
-    margin-top: 5px;
+    overflow: hidden;
+    padding: 0 0 20px;
 }
 
-nav li:first-child {
-    margin-top: 0;
+#showNav {
+    height: 44px;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    width: 44px;
+    z-index: 2;
 }
+
+#showNav::before {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.7);
+    border-top: 9px double rgba(255, 255, 255, 0.7);
+    content: "";
+    height: 3px;
+    left: 12px;
+    position: absolute;
+    top: 14px;
+    transition: border-color 0.9s;
+    width: 20px;
+}
+
+.no-touch #showNav:hover:before {
+    border-color: rgba(255, 255, 255, 1);
+}
+
 
 nav a {
-    color: #000;
+    color: rgba(255, 255, 255, 0.7);
     display: block;
-    padding: 10px;
+    text-transform: uppercase;
     text-decoration: none;
+    text-align: right;
+    font-size: 10px;
+    line-height: 2;
+    letter-spacing: 0.5em;
+    padding: 4px 38px 4px 40px;
+    transform: translate3d(20px, 0, 0);
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s, background-color 0.3s, color 0.2s 0.1s;
+    float: right;
+
 }
 
-.page-home .nav-home,
-.page-sample .nav-sample {
-    font-weight: bold;
+.no-touch nav a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 1);
+    transform: translate3d(0, 0, 0);
 }
 
-@media screen and (min-width : $breakpoint-one) {
+.page-home nav li:nth-child(1) a,
+.page-thoughts nav li:nth-child(2) a,
+.page-experience nav li:nth-child(3) a {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 1);
+}
 
-    nav ul {
-        text-align: center;
+.page-home nav li:nth-child(1) a:hover,
+.page-thoughts nav li:nth-child(2) a:hover,
+.page-experience nav li:nth-child(3) a:hover {
+
+    transform: translate3d(20px, 0, 0);
+}
+
+
+
+@media screen and (min-width: 840px) {
+
+    .js.csstransitions #showNav {
+        display: none;
     }
 
-    nav li {
-        display: inline-block;
-        width: 30%;
+    .js.csstransitions #sidebar {
+        transform: translate3d(0, 0, 0);
     }
+
 }
