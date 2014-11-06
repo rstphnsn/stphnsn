@@ -1,16 +1,15 @@
-.touch h2 {
-    padding-bottom: 1px;
-}
-
-
 figure {
     margin: 40px -15px;
 }
 
-picture {
-
-}
-
 img {
     max-width: 100%;
+}
+
+@media screen and (min-width: 560px) {
+
+    figure {
+        margin: 40px 0;
+    }
+
 }
