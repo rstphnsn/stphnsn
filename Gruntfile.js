@@ -12,16 +12,28 @@ module.exports = function (grunt) {
         /* assemble static site templating */
         assemble: {
             options: {
+                helpers: 'dev/src/templates/helpers/**/*.js',
                 assets: 'html/assets',
                 layoutdir: 'dev/src/templates/layouts/',
                 partials: 'dev/src/templates/partials/**/*.hbs',
+                collections: [{
+                    name: 'post',
+                    sortby: 'posted',
+                    sortorder: 'descending'
+                }]
             },
             pages: {
                 files: [{
                     cwd: 'dev/src/content/',
-                    src: '**/*.hbs',
+                    src: ['**/*.hbs', '!_stuff/**/*.hbs'],
                     expand: true,
                     dest: 'html/'
+                },
+                {
+                    cwd: 'dev/src/content/_stuff/',
+                    src: ['**/*.hbs'],
+                    expand: true,
+                    dest: 'html/feed/'
                 }]
             }
         },
@@ -240,7 +252,7 @@ module.exports = function (grunt) {
     //grunt.registerTask('scss', ['clean:css', 'sass:prod', 'bust-appCache']);
 
     // No AppCache
-    grunt.registerTask('js', ['coffee:compile', 'jshint', 'jasmine', 'clean:js', 'copy:jquery', 'uglify:js', 'uglify:libs', 'modernizr', 'concat:js']);
+    grunt.registerTask('js', ['coffee:compile', 'jshint', 'clean:js', 'copy:jquery', 'uglify:js', 'uglify:libs', 'modernizr', 'concat:js']);
     grunt.registerTask('scss', ['clean:css', 'sass:prod', 'autoprefixer:site', 'modernizr']);
 
     grunt.registerTask('images', ['clean:images', 'copy:images']);
