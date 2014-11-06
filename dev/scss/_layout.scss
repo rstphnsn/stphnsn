@@ -10,24 +10,24 @@ a,
 }
 
 html {
-    background-color: #1A1D22;
+    background-color: #FFFFFF;
     height: 100%;
 }
 
 body {
-    background: #1A1D22;
+    background: linear-gradient(#46484C, #1A1D22 800px);
     font-size: 100%;
     min-height: 100%;
+    margin: 0;
 }
 
 .container {
-    height: 100%;
     position: relative;
     z-index: 2;
 }
 
 main {
-    padding: 100px 0;
+    padding: 150px 0 75px;
     position: relative;
 }
 
@@ -38,8 +38,27 @@ main {
     text-align: left;
 }
 
+.container::before,
+.container::after {
+position: fixed;
+content: '';
+display: block;
+top: 0;
+left: 0;
+height: 0;
+width: 100%;
+background-color: white;
+z-index: 4;
+}
+
+.container::after {
+top: auto;
+bottom: 0;
+}
+
 .background {
-    background: linear-gradient(#727376, #1A1D22);
+        background: linear-gradient(#727376, #1A1D22 500px);
+box-sizing: border-box;
     height: 100%;
     left: 0;
     opacity: 0.4;
@@ -48,7 +67,6 @@ main {
     width: 100%;
     z-index: 1;
 }
-
 
 /*  ## LAYOUT  ----------------------------------------------------------------------*/
 
@@ -66,13 +84,9 @@ main {
     transition: transform 0.5s, opacity 0.5s;
 }
 
-.js.csstransitions .show-menu main {
-    transform: translate3d(-200px, 0, 0);
-}
-
 .js.csstransitions .content {
     opacity: 0;
-    transform: translate3d(-200px, 0, 0);
+    transform: translate3d(0, 200px, 0);
 }
 
 .js.csstransitions .content.loaded,
@@ -85,76 +99,19 @@ main {
 
 /*  ## LAYOUT  ----------------------------------------------------------------------*/
 
-@media screen and (min-width: 590px) {
-
-    .content {
-        margin: 0;
-    }
-}
-
 @media screen and (min-width: 690px) {
 
-    .js.csstransitions .show-menu main {
-        transform: translate3d(-100px, 0, 0);
+    body {
+        margin: 0 40px;
+    }
+
+    .container::before,
+    .container::after {
+        height: 40px;
+    }
+
+    main {
+        padding: 190px 0 75px;
     }
 }
 
-@media screen and (min-width: 790px) {
-
-    .content {
-        margin: 0 0 0 30px;
-    }
-
-    .js.csstransitions .show-menu main {
-        transform: translate3d(-50px, 0, 0);
-        transition: transform 0.5s, opacity 0.5s;
-    }
-
-    .js.csstransitions .content.loaded,
-    .js.csstransitions .content.new {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-        transition: opacity 0.5s, transform 0.5s;
-    }
-}
-
-@media screen and (min-width: 840px) {
-
-    .content {
-        margin: 0 0 0 60px;
-    }
-
-    .js.csstransitions main,
-    .js.csstransitions .show-menu main {
-        transform: translate3d(0, 0, 0);
-        transition: transform 0.7s, opacity 0.7s;
-    }
-
-    .js.csstransitions .content.loaded,
-    .js.csstransitions .content.new {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-        transition: opacity 0.7s, transform 0.7s;
-    }
-}
-
-@media screen and (min-width: 940px) {
-
-    .content {
-        margin: 0 0 0 90px;
-    }
-}
-
-@media screen and (min-width: 990px) {
-
-    .content {
-        margin: 0 0 0 120px;
-    }
-}
-
-@media screen and (min-width: 1040px) {
-
-    .content {
-        margin: 0 auto;
-    }
-}
