@@ -22,7 +22,6 @@ nav li {
 
 nav a {
     background-color: #000;
-    border-left: 1px solid #000;
     color: #FFF;
     display: block;
     font-size: 10px;
@@ -32,11 +31,6 @@ nav a {
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
-
-}
-
-nav li:first-child a {
-    border-left: 0;
 }
 
 @media screen and (min-width: 690px) {
