@@ -1,41 +1,57 @@
 var rps = rps || {};
 
-rps.nav = (function (window, document) {
+rps.nav = (function (window, $) {
     'use strict';
 
-    var init,
+    var $window = $(window),
+        $body = $('body'),
+        $nav = $('#menu'),
 
-    checkInternalLink = function (event) {
+    hijackLinks = function () {
+        $('html').on('click', 'a[href^="/"]', checkInternalLink);
+    },
+
+    // Check to see if we are not already on this page before loading a new one
+    checkInternalLink = function (e) {
         var newPath = this.pathname,
             currentPath = window.location.pathname;
-        event.preventDefault();
-        event.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
         if (newPath !== currentPath) {
             rps.page.go(newPath);
         }
     },
 
-    showHideNav = function (event) {
-        console.log('showHideNav');
-        event.preventDefault();
-        event.stopPropagation();
-        rps.lib.toggleClass(document.body, 'show-menu');
-    };
+    openCloseNav = function () {
+        $('.no-touch body').on('click', '#showNav', function (e) {
+            e.preventDefault();
+            $body.toggleClass('show-menu');
+        });
+        $('.touch body').on('touchstart', '#showNav', function (e) {
+            e.preventDefault();
+            $body.toggleClass('show-menu');
+        });
+    },
 
-    init = function () {
-        if ('ontouchend' in document) {
-            rps.lib.addEventListeners('#showNav', 'touchstart', showHideNav);
-            rps.lib.addEventListeners('a[href^="/"]', 'touchstart', checkInternalLink);
-        } else {
-            rps.lib.addEventListeners('#showNav', 'click', showHideNav);
-            rps.lib.addEventListeners('a[href^="/"]', 'click', checkInternalLink);
-        }
-    };
+    moveMenu = function () {
+        var menu = $('#menu').remove();
+        $('header').after(menu);
+    },
 
-    return {
-        init: init
-    };
+    showHideNav = function () {
+        $window.on('add-nav', function () {
+            $body.addClass('show-menu');
+        });
+        $window.on('remove-nav', function () {
+            $body.removeClass('show-menu');
+        });
+    },
 
-})(window, window.document);
+    init = (function () {
+        moveMenu();
+        showHideNav();
+        openCloseNav();
+        hijackLinks();
+    })();
 
-rps.nav.init();
+})(window, window.jQuery);

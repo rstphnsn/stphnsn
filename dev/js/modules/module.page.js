@@ -1,21 +1,25 @@
 var rps = rps || {};
 
-rps.page = (function (window, document) {
+rps.page = (function (window, document, $) {
     'use strict';
 
-    var xhr,
+    var $window = $(window),
+        $html = $('html'),
+        $body = $('body'),
+        $main = $('main'),
+        $title = $('title'),
+        request,
         hasHistoryAPI = Modernizr.history,
         loaded = false,
         path = window.location.pathname,
         pageTimeout,
         pageName,
-        pathchangeEvent = rps.lib.createEvent('pathchange'),
 
     // Add event listener to check when a "pathchange" or a popstate has been fired
-    addListenerForPathChange = function () {
+    addListenerForStateChange = function () {
         var eventType;
         // Need to check if history/popstate is available else fall back to hashChange
-        window.addEventListener('pathchange', function (e) {
+        $window.on('pathchange', function (e) {
             eventType = e.type;
             processPath(window.location.pathname);
         });
@@ -23,115 +27,125 @@ rps.page = (function (window, document) {
 
     // Add a listener for page load
     addListenerForPageLoad = function () {
-        var content = document.querySelector('.content');
-        window.onload = function () {
+        $window.on('load', function (e) {
             loaded = true;
-            document.querySelector('html').classList.add('loaded');
-            content.classList.add('loaded');
-        };
+            $html.addClass('loaded');
+            $main.find('.content').addClass('loaded');
+        });
     },
 
     addListenerForPopstate = function () {
-        window.addEventListener('popstate', function (e) {
-            window.dispatchEvent(pathchangeEvent);
+        var initial = window.location.href;
+        $window.on('popstate', function (e) {
+            $window.trigger('pathchange');
         });
     },
 
     // Abort existing AJAX page request and send a new AJAX request to a url
     getPage = function (target) {
         // Stop any existing ajax request
-        abortExistingRequest(xhr);
-        xhr = new XMLHttpRequest();
-        xhr.onload = handleSuccess;
-        xhr.onerror = handleFailure;
-        xhr.open('get', target, true);
-        xhr.send();
+        abortExistingRequest(request);
+        // Start a new request
+        request = $.ajax({
+            type: 'GET',
+            url: target
+        }).done(function (data) {
+            handleSuccess(data);
+        }).fail(function (jqXHR) {
+            handleFailure(jqXHR);
+        }).always();
     },
 
     // Handle the response from a getPage request
     handleSuccess = function (data) {
-        var div = document.createElement('div'),
-            main,
-            content;
-        div.innerHTML = data.target.response;
-        main = div.querySelector('main');
-        content = main.querySelector('.content');
-        pageName = main.getAttribute('data-page');
+        var $newMain = $(data).find('.main'),
+            $content = $newMain.html(),
+            newPageName = $newMain.data('page');
+        pageName = newPageName;
 
         // Update Page
-        updatePage(pageName, div.querySelector('title').textContent);
+        updatePage(pageName, getPageTitle(data));
         // Timeout to show page loading
         clearTimeout(pageTimeout);
         pageTimeout = setTimeout(function () {
             clearTimeout(pageTimeout);
             // Add the new page content
-            addPage(content, pageName);
+            addPage($content, pageName);
         }, 50);
     },
 
-    addPage = function (content, pageName) {
-        var specificPageAdded = rps.lib.createEvent(pageName + '-page-added'),
-            pageAdded = rps.lib.createEvent('page-added');
+    addPage = function ($content, pageName) {
         removeLoading();
-        document.querySelector('main').appendChild(content);
+        $main.append($content);
+        // Timeout needed to trigger animation class change
         setTimeout(function () {
-            document.querySelector('.content').classList.add('new');
-        }, 50);
+            $main.find('.content').not('.destroy').addClass('new');
+        }, 10);
         if (pageName) {
-            window.dispatchEvent(specificPageAdded);
+            console.log('Added: ' + pageName);
+            $window.trigger(pageName + '-page-added');
         }
-        window.dispatchEvent(pageAdded);
+        $window.trigger('page-added');
     },
 
-    handleFailure = function (data) {
-        console.log('getPage Fail');
-        console.log(data);
+    handleFailure = function (jqXHR) {
+        if (jqXHR.status === 404) {
+            getPage('/404');
+        }
     },
 
     go = function (newPath) {
         if (hasHistoryAPI) {
             history.pushState('', '', newPath);
-            window.dispatchEvent(pathchangeEvent);
+            $window.trigger('pathchange');
         } else {
             window.document.location = newPath;
         }
     },
 
-    abortExistingRequest = function (xhr) {
-        if (xhr) {
-            xhr.abort();
+    abortExistingRequest = function (request) {
+        if (request) {
+            request.abort();
         }
     },
 
     getPageTitle = function (data) {
-        //var title = data.match(/<title>(.*?)<\/title>/)[1].trim();
-        return 'title';
+        var title = data.match(/<title>(.*?)<\/title>/)[1].trim();
+        return title;
     },
 
     updatePage = function (pageName, pageTitleText) {
-        document.querySelector('body').className = 'page-' + pageName;
-        document.querySelector('main').setAttribute('data-page', pageName);
-        document.querySelector('title').textContent = pageTitleText;
+        $body.removeClass().addClass('page-' + pageName);
+        $main.attr('data-page', pageName);
+        $title.text(pageTitleText);
     },
 
     addLoading = function () {
-        document.querySelector('html').classList.add('loading');
+        $html.addClass('loading');
     },
 
     removeLoading = function () {
-        document.querySelector('html').classList.remove('loading');
+        $html.removeClass('loading');
+    },
+
+    startPageTransition = function () {
+        if ($body.hasClass('show-menu')) {
+            $body.removeClass('show-menu');
+            removeContent();
+        } else {
+            removeContent();
+        }
     },
 
     removeContent = function () {
-        var event1 = rps.lib.createEvent('page-removed'),
-            event2 = rps.lib.createEvent(pageName + '-page-removed'),
-            el = document.querySelector('.content');
-        window.dispatchEvent(event1);
-        window.dispatchEvent(event2);
-        el.parentNode.removeChild(el);
+        console.log('Removed: ' + pageName);
+        $window.trigger('page-removed');
+        $window.trigger(pageName + '-page-removed');
+        $main.find('.content:first').remove();
     },
 
     processPath = function (path) {
+
         // Index page
         if (path === '') {
             path = '/';
@@ -144,15 +158,16 @@ rps.page = (function (window, document) {
 
         // Start page load and transition
         addLoading();
-        removeContent();
+        startPageTransition();
         getPage(path);
     },
 
     init = (function () {
-        pageName = document.querySelector('main').getAttribute('data-page');
+        $html.addClass('js');
+        pageName = $main.data('page');
         addListenerForPageLoad();
         addListenerForPopstate();
-        addListenerForPathChange();
+        addListenerForStateChange();
     })();
 
     return {
@@ -160,4 +175,4 @@ rps.page = (function (window, document) {
         pageName: pageName
     };
 
-})(window, window.document);
+})(window, window.document, window.jQuery);
