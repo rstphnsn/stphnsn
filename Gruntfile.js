@@ -180,7 +180,7 @@ module.exports = function (grunt) {
             root: {
                 expand: true,
                 cwd: 'dev/root/',
-                src: ['**'],
+                src: ['**', '.htaccess'],
                 dest: 'html/'
             }
         },
