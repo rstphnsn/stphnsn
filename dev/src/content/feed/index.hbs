@@ -1,6 +1,6 @@
 ---
 section: "Feed"
-page: "feed"
+pageid: "feed"
 bodyclass: "page-feed"
 title: "Feed"
 
@@ -9,12 +9,21 @@ layout: page.hbs
 ---
 <div class="content" id="content">
 
-{{#withSort post 'data.posted'}}
-    {{#each this.pages }}
-    <h2>{{this.data.title}}</h2>
-    <p>{{this.data.introduction}}</p>
-    <a href="{{ replaceStr this.dirname 'html' '' }}">{{ this.data.title }}</a>
-    {{/each}}
-  {{/withSort}}
+    <section>
+
+      <p><a href="/asgasg">Broken link</a></p>
+
+    {{#withSort post 'data.posted'}}
+        {{#each this.pages }}
+        <article class="feed-item">
+            <h2>{{this.data.title}}</h2>
+            <p>{{this.data.introduction}}</p>
+            <p><a href="{{ replaceStr this.dirname 'html' '' }}">{{ this.data.title }}</a></p>
+            <p><time itemprop="dateCreated" datetime="{{formatDate this.data.posted "%Y/%m/%d"}}">{{formatDate this.data.posted "%e %B %Y"}}</time></p>
+        </article>
+        {{/each}}
+    {{/withSort}}
+
+    </section>
 
 </div>
