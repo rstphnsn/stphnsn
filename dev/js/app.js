@@ -1,34 +1,24 @@
-var rps = rps || {};
+var base = base || {};
 
-rps.lib = (function (document) {
+base.app = (function (window, $, hljs) {
     'use strict';
 
-    var toggleClass = function (element, className) {
-        element.classList.toggle(className);
-    },
+    var $window = $(window),
 
-    createEvent = function (eventName) {
-        var ev;
-        if (typeof CustomEvent === 'function') {
-            ev = new CustomEvent(eventName);
-        } else {
-            ev = document.createEvent('HTMLEvents');
-            ev.initEvent(eventName, true, true);
-        }
-        return ev;
-    },
-
-    addEventListeners = function (selector, eventType, functionName) {
-        var elements = document.querySelectorAll(selector);
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].addEventListener(eventType, functionName);
-        }
+    highLightCode = function () {
+        $('pre code').each(function (i, elem) {
+            hljs.highlightBlock(elem);
+        });
     };
 
-    return {
-        toggleClass: toggleClass,
-        addEventListeners: addEventListeners,
-        createEvent: createEvent
-    };
+    $window.on('load', function () {
+        $('html').addClass('loaded');
+    });
 
-})(window.document);
+    $window.on('page-added', function () {
+        highLightCode();
+    });
+
+    highLightCode();
+
+})(window, window.jQuery, window.hljs);

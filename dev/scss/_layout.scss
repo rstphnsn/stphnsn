@@ -10,125 +10,63 @@ a,
 }
 
 html {
-    background-color: #FFFFFF;
     height: 100%;
 }
 
 body {
-    background-color:  #1A1D22;
+    background-color: $base--backgroundColor;
     display: flex;
     flex-direction: row;
-    font-size: 100%;
     margin: 0;
     min-height: 100%;
 }
 
 .container {
-    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0)  1000px);
+    background: linear-gradient(#47494D, #2F3236 1000px);
     flex: 1;
-    position: relative;
-    z-index: 2;
 }
 
 .no-touch .container {
     background-attachment: fixed;
 }
 
-main {
-    padding: 150px 0 75px;
+.main {
+    padding: 100px 0 75px;
     position: relative;
-}
-
-.content {
-
 }
 
 section {
     margin: 0 auto;
-    max-width: 560px;
+    max-width: 700px;
     padding: 0 15px;
 }
 
-section.full {
-    margin: 0 auto;
-    max-width: auto;
-    padding: 0 15px;
-}
 
-.container::before,
-.container::after {
-position: fixed;
-content: '';
-display: block;
-top: 0;
-left: 0;
-height: 0;
-width: 100%;
-background-color: white;
-z-index: 4;
-}
+//  ## PAGE LOAD TRANSITIONS  -------------------------------------------------------//
 
-.container::after {
-top: auto;
-bottom: 0;
-}
-
-.background {
-        background: linear-gradient(#727376, #1A1D22 500px);
-box-sizing: border-box;
-    height: 100%;
-    left: 0;
-    opacity: 0.4;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-}
-
-/*  ## LAYOUT  ----------------------------------------------------------------------*/
-
-.js.csstransitions body {
+.js.csstransitions .container {
     opacity: 0;
-    transition: opacity 0.6s, background-color 0.3s;
+    transition: background-color 0.6s, opacity 0.6s;
 }
 
-.js.csstransitions.loaded body {
+.js.csstransitions.loaded .container {
     opacity: 1;
 }
 
-.js.csstransitions main {
-    transform: translate3d(0, 0, 0);
-    transition: transform 0.5s, opacity 0.5s;
-}
 
-.js.csstransitions .content {
-    opacity: 0;
-    transform: translate3d(0, 200px, 0);
-}
+//  ## MEDIA QUERIES  ---------------------------------------------------------------//
 
-.js.csstransitions .content.loaded,
-.js.csstransitions .content.new {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-    transition: opacity 0.3s, transform 0.3s;
-}
+@media screen and (min-width: $breakpoint-one) {
 
-
-/*  ## LAYOUT  ----------------------------------------------------------------------*/
-
-@media screen and (min-width: 690px) {
-
-    body {
-        margin: 0 40px;
-    }
-
-    .container::before,
-    .container::after {
-        height: 40px;
-    }
-
-    main {
-        padding: 190px 0 75px;
+    section {
+        padding: 0 30px;
     }
 }
 
+@media screen and (min-width: $breakpoint-two) {
+
+    .main {
+        padding: 125px 0 75px;
+    }
+
+}

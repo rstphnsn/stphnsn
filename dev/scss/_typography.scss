@@ -1,134 +1,147 @@
+//  ## TYPOGRAPHY  -----------------------------------------------------------------//
 
-$benton-sans-light-url: "../fonts/benton-sans/light/de72ba14-fdff-4f82-9e20-0479255e5b5e-";
-$benton-sans-thin-url: "../fonts/benton-sans/thin/46488cc0-1b8e-42e1-8696-27dd7e2eb01d-";
-$benton-sans-book-url: "../fonts/benton-sans/book/0d25f632-e177-4738-a4eb-b5b2464ae8ef-";
-$benton-sans-medium-url: "../fonts/benton-sans/medium/2b0077e1-94cf-4153-95b2-c6e2795e683e-";
-$benton-sans-bold-url: "../fonts/benton-sans/bold/be373bac-8e60-4dee-b748-f43b0eda4588-";
-
-@font-face {
-    font-family: "Benton Sans Light";
-    src: url("#{$benton-sans-light-url}2.eot");
-    src: url("#{$benton-sans-light-url}2.eot?#iefix") format("embedded-opentype"),
-         url("#{$benton-sans-light-url}3.woff") format("woff"),
-         url("#{$benton-sans-light-url}1.ttf") format("truetype"),
-         url("#{$benton-sans-light-url}4.svg#akqa-2014") format("svg");
-    font-weight: normal;
-    font-style: normal;
+html {
+    font-size: $base--fontSize;
+    color: $base--color;
+    font-family: $base--fontFamily;
+    font-weight: $base--fontWeight;
+    line-height: 1.875;
 }
-
-%benton-light {
-    font-family: "Benton Sans Light", Arial, sans-serif;
-}
-
-@font-face {
-    font-family: "Benton Sans Thin";
-    src: url("#{$benton-sans-thin-url}2.eot");
-    src: url("#{$benton-sans-thin-url}2.eot?#iefix") format("embedded-opentype"),
-         url("#{$benton-sans-thin-url}3.woff") format("woff"),
-         url("#{$benton-sans-thin-url}1.ttf") format("truetype"),
-         url("#{$benton-sans-thin-url}4.svg#akqa-2014") format("svg");
-    font-weight: normal;
-    font-style: normal;
-}
-
-%benton-thin {
-    font-family: "Benton Sans Thin", Arial, sans-serif;
-}
-
-@font-face {
-    font-family: "Benton Sans Book";
-    src: url("#{$benton-sans-book-url}2.eot");
-    src: url("#{$benton-sans-book-url}2.eot?#iefix") format("embedded-opentype"),
-         url("#{$benton-sans-book-url}3.woff") format("woff"),
-         url("#{$benton-sans-book-url}1.ttf") format("truetype"),
-         url("#{$benton-sans-book-url}4.svg#akqa-2014") format("svg");
-    font-weight: normal;
-    font-style: normal;
-}
-
-%benton-book {
-    font-family: "Benton Sans Book", Arial, sans-serif;
-}
-
-@font-face {
-    font-family: "Benton Sans Medium";
-    src: url("#{$benton-sans-medium-url}2.eot");
-    src: url("#{$benton-sans-medium-url}2.eot?#iefix") format("embedded-opentype"),
-         url("#{$benton-sans-medium-url}3.woff") format("woff"),
-         url("#{$benton-sans-medium-url}1.ttf") format("truetype"),
-         url("#{$benton-sans-medium-url}4.svg#akqa-2014") format("svg");
-    font-weight: normal;
-    font-style: normal;
-}
-
-%benton-medium {
-    font-family: "Benton Sans Medium", Arial, sans-serif;
-}
-
-@font-face {
-    font-family: "Benton Sans Bold";
-    src: url("#{$benton-sans-bold-url}2.eot");
-    src: url("#{$benton-sans-bold-url}2.eot?#iefix") format("embedded-opentype"),
-         url("#{$benton-sans-bold-url}3.woff") format("woff"),
-         url("#{$benton-sans-bold-url}1.ttf") format("truetype"),
-         url("#{$benton-sans-bold-url}4.svg#akqa-2014") format("svg");
-    font-weight: normal;
-    font-style: normal;
-}
-
-%benton-bold {
-    font-family: "Benton Sans Bold", Arial, sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-}
-
 
 h1 {
-    @extend %benton-light;
-    color: #FFF;
-    font-size: 35px;
-    font-weight: normal;
-    line-height: 45px;
-    margin: 0 0 20px;
+    font-size: 3.4375rem; // 55px
+    font-weight: $base--fontWeight;
+    line-height: 1.09090909090909; // 60px
+    margin: 3.125rem 0; // 50px 0
 }
 
 h2 {
-    @extend %benton-light;
-    color: #FFF;
-    font-size: 20px;
-    font-weight: normal;
-    line-height: 30px;
-    margin: 35px 0 15px;
+    font-size: 2rem; // 32px
+    font-weight: $base--fontWeight;
+    line-height: 1.25; // 40px
+    margin: 2.5rem 0; // 40px 0
 }
 
-h1 + h2 {
-    margin: -10px 0 30px;
+h1 + h2.subheading {
+    margin: -1.25rem 0 1.875rem; // -20px 0 30px
 }
 
 h3 {
-    @extend %benton-bold;
-    color: #FFF;
-    line-height: 20px;
-    font-size: 12px;
-    margin: 35px 0 15px;
-    font-weight: normal;
+    font-size: 1.5rem; // 24px
+    font-weight: $base--fontWeight;
+    line-height: 1.25; // 30px
+    margin: 2.1875rem 0; // 35px 0
+}
+
+h4 {
+    font-size: 1.25rem; // 20px
+    font-weight: $base--fontWeight;
+    line-height: 1.5; // 30px
+    margin: 1.5625rem 0; // 25px 0
+}
+
+h5 {
+    font-size: 1rem; // 16px
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    line-height: 1.5625; // 25px
+    margin: 1.5625rem 0 1.25rem; // 25px 0 20px
+    text-transform: uppercase;
+}
+
+h6 {
+    font-size: 1.125rem; // 18px
+    font-weight: 700;
+    line-height: 1.38888888888889; // 25px
+    margin: 1.5625rem 0 0.9375rem; // 25px 0 15px
+}
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child,
+p:first-child {
+    margin-top: 0;
 }
 
 p {
-    @extend %benton-light;
-    color: #FFF;
-    line-height: 25px;
-    font-size: 15px;
-    margin: 0 0 20px;
+    margin: 0 0 1.25rem; // 0 0 20px
 }
 
-.error {
-    color: #F00;
+ul,
+ol {
+    line-height: 1.875rem; // 30px
+    margin: 2.5rem 0; // 40px 0
+    padding: 0 0 0 1.5rem; // 0 0 0 25px
+}
+
+li {
+    list-style-position: outside;
+    margin: 0 0 0.625rem; // 0 0 10px
+    padding: 0;
+}
+
+blockquote {
+    margin: 2.5rem 0; // 40px 0
+    padding: 0.3125rem 0.625rem 0.3125rem 1.25rem; // 5px 10px 5px 20px
+}
+
+blockquote p {
+    font-size: 1.5rem; // 24px
+    font-style: italic;
+    line-height: 1.45833333333333; // 35px
+    margin: 0 0 0.9375rem; // 0 0 15px
+}
+
+blockquote p:last-child {
+    margin: 0;
+}
+
+legend {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+label {
+    line-height: 1.875; // 30px
+}
+
+input[type=text],
+input[type=number],
+input[type=email],
+input[type=date],
+input[type=password],
+textarea {
+    font-weight: 300;
+}
+
+a {
+    color: $base--linkColor;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover,
+a:focus,
+a:active {
+    color: $base--linkColorHover;
 }
 
 
-@media screen and (min-width: 40em) {
+//  ## MEDIA QUERIES  --------------------------------------------------------------//
 
+@media screen and (min-width: $breakpoint-two) {
+
+    html {
+        font-size: 16px;
+    }
+
+    ol,
+    ul {
+        padding: 0;
+    }
 }

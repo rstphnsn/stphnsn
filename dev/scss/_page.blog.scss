@@ -1,0 +1,11 @@
+.feed-item {
+    margin-top: 60px;
+}
+
+h1 + .feed-item {
+    margin-top: 0;
+}
+
+.feed-item h2 {
+    margin-bottom: 10px;
+}

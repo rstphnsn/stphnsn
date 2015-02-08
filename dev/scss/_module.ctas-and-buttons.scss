@@ -1,0 +1,68 @@
+//  ## CTAs  ------------------------------------------------------------------------//
+
+.cta,
+.form-buttons {
+    margin: 30px 0;
+    overflow: hidden;
+}
+
+.cta a,
+.cta button,
+.form-buttons input {
+    background-color: $base--ctaColor;
+    border: 1px solid $base--ctaColor;
+    border-radius: 0;
+    color: $base--backgroundColor;
+    display: block;
+    float: left;
+    font-size: 0.75rem; // 12px
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    line-height: 3.33333333333333; // 40px
+    margin-right: 10px;
+    padding: 0 30px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 0.5s, border 0.5s, color 0.5s;
+}
+
+.form-buttons input {
+    float: right;
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.cta a:hover,
+.cta a:focus,
+.cta a:active,
+.cta button:hover,
+.cta button:focus,
+.cta button:active,
+.form-buttons input:hover,
+.form-buttons input:focus,
+.form-buttons input:active {
+    background-color: $base--ctaColorHover;
+    border: 1px solid $base--ctaColorHover;
+}
+
+.cta-secondary a,
+.cta-secondary button,
+.form-buttons input[type=reset] {
+    background-color: transparent;
+    border: 1px solid $base--ctaColor;
+    color: $base--ctaColor;
+}
+
+.cta-secondary a:hover,
+.cta-secondary a:focus,
+.cta-secondary a:active,
+.cta-secondary button:hover,
+.cta-secondary button:focus,
+.cta-secondary button:active,
+.form-buttons input[type=reset]:hover,
+.form-buttons input[type=reset]:focus,
+.form-buttons input[type=reset]:active {
+    background-color: transparent;
+    border: 1px solid $base--ctaColorHover;
+    color: $base--ctaColorHover;
+}

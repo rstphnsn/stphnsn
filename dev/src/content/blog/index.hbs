@@ -1,0 +1,37 @@
+---
+section: "Blog"
+pageid: "blog"
+bodyclass: "page-blog"
+title: "Blog"
+
+published: true
+layout: page.hbs
+
+---
+
+<section>
+    <h1>Blog</h1>
+
+{{#withSort post 'data.posted'}}
+{{#getPosts this.pages ../this filter='{"section": "Blog", "post": true, "published": true}' sort='{"property": "posted", "order": "desc"}' page='{"start": 1, "length": 10}' }}
+    <article class="feed-item">
+        <h2><a href="{{ replaceStr this.item.dirname 'html' '' }}">{{this.item.data.title}}</a></h2>
+        <p><time itemprop="dateCreated" datetime="{{formatDate this.item.data.posted "%Y/%m/%d"}}">{{formatDate this.item.data.posted "%e %B %Y"}}</time></p>
+        <p>{{this.item.data.intro}}</p>
+        <div class="cta">
+            <a href="{{ replaceStr this.item.dirname 'html' '' }}">Read more</a>
+        </div>
+    </article>
+{{/getPosts}}
+{{/withSort}}
+
+<!--    Add this back in if there are more than ten articles
+    <div class="pagination">
+        <p>
+            {{#ifPostContentFound this.pages ../this filter='{"section": "Blog", "post": true}' page='{"start": 2, "length": 10}' }}<a href="/news/pages/02/" class="btn">Older</a>{{/ifPostContentFound}}
+        </p>
+    </div>
+-->
+
+</section>
+

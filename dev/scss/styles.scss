@@ -20,23 +20,26 @@ CONTENTS
 */
 
 
-//  ## FRAMEWORK  -------------------------------------------------------------------*/
+//  ## FRAMEWORK  -------------------------------------------------------------------//
 
 @import "libs/normalize.2.1.3";
 @import "_variables";
 @import "_typography";
 @import "_layout";
 @import "_common";
+@import "_docs";
 
 
-//  ## MODULES  ---------------------------------------------------------------------*/
+//  ## MODULES  ---------------------------------------------------------------------//
 
-@import "_module.header";
 @import "_module.navigation";
-@import "_module.footer";
+@import "_module.ctas-and-buttons";
+@import "_module.forms";
+@import "_module.tables";
+@import "_module.code";
 
 
-//  ## PAGES  -----------------------------------------------------------------------*/
+//  ## PAGES SPECIFIC OVERRIDES -----------------------------------------------------//
 
 @import "_page.home";
-@import "_page.sample";
+@import "_page.blog";

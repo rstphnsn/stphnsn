@@ -7,7 +7,7 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
 
-        pkg: grunt.file.readJSON('package.json'),
+        secret: grunt.file.readJSON('secret.json'),
 
         /* assemble static site templating */
         assemble: {
@@ -25,15 +25,15 @@ module.exports = function (grunt) {
             pages: {
                 files: [{
                     cwd: 'dev/src/content/',
-                    src: ['**/*.hbs', '!_stuff/**/*.hbs'],
+                    src: ['**/*.hbs', '!_articles/**/*.hbs'],
                     expand: true,
                     dest: 'html/'
                 },
                 {
-                    cwd: 'dev/src/content/_stuff/',
+                    cwd: 'dev/src/content/_articles/',
                     src: ['**/*.hbs'],
                     expand: true,
-                    dest: 'html/feed/'
+                    dest: 'html/blog/'
                 }]
             }
         },
@@ -155,7 +155,7 @@ module.exports = function (grunt) {
               separator: ';',
             },
             js: {
-                src: ['html/assets/js/jquery.js', 'html/assets/js/app.min.js', 'html/assets/js/libs.min.js'],
+                src: ['html/assets/js/jquery.js', 'html/assets/js/libs.min.js', 'html/assets/js/app.min.js'],
                 dest: 'html/assets/js/scripts.min.js'
             }
         },
@@ -242,6 +242,27 @@ module.exports = function (grunt) {
                 ],
                 dest: 'mfc.appcache'
             }
+        },
+
+        htmlmin: {
+            dist: {
+                options: {
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                files: [{
+                    cwd: 'html/',
+                    dest: 'html/',
+                    expand: true,
+                    src: '**/*.html'
+                }]
+            }
+        },
+
+        shell: {
+            deploy: {
+                command: 'sshpass -p "<%= secret.password %>" scp -r html <%= secret.username %>@<%= secret.host %>:domains/stphnsn.com'
+            }
         }
 
     });
@@ -258,7 +279,10 @@ module.exports = function (grunt) {
     grunt.registerTask('images', ['clean:images', 'copy:images']);
     grunt.registerTask('fonts', ['clean:fonts', 'copy:fonts']);
 
-    grunt.registerTask('assembleio', ['clean:html', 'assemble', 'copy:root']);
+    grunt.registerTask('assembleio', ['clean:html', 'assemble', 'copy:root', 'htmlmin']);
     // Targets
     grunt.registerTask('default', ['assembleio', 'js', 'scss', 'images', 'fonts']);
+
+    grunt.registerTask('deploy', ['default', 'shell']);
+
 };
