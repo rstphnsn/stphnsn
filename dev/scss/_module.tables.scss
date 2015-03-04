@@ -1,0 +1,52 @@
+//  ## TABLES  ----------------------------------------------------------------------//
+
+table {
+    width: 100%;
+}
+
+th {
+    background-color: rgba(0, 0, 0, 0.3);
+    font-size: 0.8125rem; // 16px
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+td {
+    background-color: rgba(0, 0, 0, 0.1);
+    line-height: 1.5625; // 25px
+}
+
+th,
+td {
+    padding: 5px 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+tr:first-child td {
+    padding: 10px 10px 5px;
+}
+
+tr:last-child td {
+    padding: 5px 10px 10px;
+}
+
+
+//  ## MEDIA QUERIES  --------------------------------------------------------------//
+
+@media screen and (min-width: $breakpoint-two) {
+
+    th,
+    td {
+        padding: 10px 20px;
+    }
+
+    tr:first-child td {
+        padding: 20px 20px 10px;
+    }
+
+    tr:last-child td {
+        padding: 10px 20px 20px;
+    }
+}

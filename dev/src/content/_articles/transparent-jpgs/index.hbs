@@ -1,0 +1,194 @@
+---
+section: "Blog"
+bodyclass: "page-blog"
+post: true
+layout: page.hbs
+
+title: "Transparent JPGs"
+pageid: "transparent-jpgs"
+
+intro: "During a recent project - a web app for creating custom training shoe designs from the colours in your Instagram photos - I needed to reduce the total page download size substantially for delivery to mobiles. Find out how I used Canvas compositing to reduce image file sizes by over 80%."
+
+posted: 2014-11-20
+published: true
+
+---
+
+<section>
+
+    <h1>Transparent JPGs</h1>
+    <h2>Reducing the file size of transparent images</h2>
+
+    <p>During a recent project - a web app for creating custom training shoe designs from the colours in your Instagram photos - I needed to reduce the total page download size substantially for delivery to mobiles.</p>
+
+    <p>At one stage during early development one of the pages contained over 750Kb of 32-bit PNG files. Obviously I wanted to get that size down. However the shoe images themselves had to remain transparent for the app to work as intended.</p>
+
+    <h2>Initial PNG set up</h2>
+
+    <div class="example">
+        <figure class="item" style="background:url('/assets/images/transparent-jpgs/background-1.jpg');">
+            <img src="/assets/images/transparent-jpgs/AM1.png" width="306" height="306" alt="Transparent PNG">
+        </figure>
+        <p>PNG on top of JPG - <strong>162KB</strong></p>
+    </div>
+    
+    <div class="code-block">
+    <h6>Example HTML</h6>
+        <pre>
+            <code>
+&lt;div class="item" style="background:url('img/background-1.jpg');"&gt;
+    &lt;img src="img/AM1.png" width="306" height="306"  alt="Transparent PNG"&gt;
+&lt;/div&gt;</code>
+        </pre>
+    </div>
+
+    <p>Initially the app had a typical set up. One transparent 32-bit PNG placed on top of a background JPG. Both images are high-res 512px x 512px for retina displays resized down to 306px x 306px with CSS. Even with severe compression the total file size is <strong>162KB</strong>.</p>
+
+    <p>Our app was going to need something radical to reduce this total.</p>
+
+    <h2>Canvas compositing</h2>
+
+    <p>The <code>Canvas</code> element has been around for quite some time now (<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/1.5" ref="external">Firefox 1.5)</a>. It’s generally seen as somewhat of an alternative to a Flash. An interactive and scriptable container for charts, games and 3D environments. However there are a couple of less well know features of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" rel="extranal">Canvas API</a> that can be very useful.</p>
+
+    <p>Firstly the element itself is transparent - just like a <code>div</code>. It can be sized, stacked and have background colours applied to it using CSS. And secondly it’s great for image manipulation such as drawing, scaling, cropping and compositing.</p>
+
+    <p>The <a href="https://developer.mozilla.org/samples/canvas-tutorial/6_1_canvas_composite.html" rel="external"><code>globalCompositeOperation</code></a> method provides a number of different options. The <code>XOR</code> composite removes the pixels from one image where they are overlapped by an image on top leaving the combined image transparent.</p>
+
+    <h2>Transparent Canvas implementation</h2>
+
+    <p>We took the Instagram image and set it as the background of the <code>div</code> containing our <code>canvas</code> element.</p>
+
+    <div class="example">
+        <div class="item">
+            <img src="/assets/images/transparent-jpgs/background-1.jpg" width="306" height="306">
+        </div>
+        <p>
+            Background image JPG - <strong>25KB</strong>
+        </p>
+    </div>
+
+    <p>The base for our composite was a JPG of our shoes with a white background. This was compressed ~40% leaving us with an image file size around <strong>32KB</strong>.</p>
+
+    <div class="example">
+        <div class="item">
+            <img src="/assets/images/transparent-jpgs/AM1.jpg" width="306" height="306">
+        </div>
+        <p>
+            Shoe JPG - <strong>32KB</strong>
+        </p>
+    </div>
+
+    <p>The key part of to the compositing operation is the mask image. This is a black and white transparent PNG that knocks out the pixels from the JPG image. These are 8-bit PNGs around <strong>~4Kb</strong>.</p>
+    
+    <div class="example">
+        <div class="item mask">
+            <img src="/assets/images/transparent-jpgs/AM1-mask.png">
+        </div>
+        <p>
+            Mask 8-bit PNG - <strong>4KB</strong>
+        </p>
+    </div>
+
+    <p>I wrote a simple JavaScript class (<strong>3KB</strong>) that loads the shoe and mask images and performs the compositing leaving a transparent canvas element. This is displayed on top of the background image in the same way as the PNG implementation above.</p>
+
+    <div class="code-block">
+        <h6>Javascript</h6>
+        <pre>
+            <code>
+(function (window, document) {
+
+    var TransparentJPGs = function () {
+
+        var transparentJPGs,
+            i,
+
+        init = function () {
+            transparentJPGs = document.getElementsByClassName('transparent-jpg');
+            for (i = 0; i &lt; transparentJPGs.length; i++) {
+                var canvasElement = transparentJPGs[i];
+                loadImages({
+                    rgb: canvasElement.getAttribute('data-rgb'),
+                    mask: canvasElement.getAttribute('data-mask')
+                }, render, i);
+            }
+        },
+
+        loadImages = function (files, callback, count) {
+            var toLoad = 0,
+                images = {},
+                id,
+                image,
+                loaded;
+            loaded = function () {
+                --toLoad;
+                if (!toLoad) {
+                    callback(images, count);
+                }
+            };
+            for (id in files) {
+                if (files.hasOwnProperty(id)) {
+                    image = new Image();
+                    ++toLoad;
+                    image.onload = loaded;
+                    image.src = files[id];
+                    images[id] = image;
+                }
+            }
+        },
+
+        render = function (images, i) {
+            var canvasContext = transparentJPGs[i].getContext('2d'),
+                x = 0,
+                y = 0;
+            canvasContext.drawImage(images.rgb, x, y);
+            canvasContext.globalCompositeOperation = 'xor';
+            canvasContext.drawImage(images.mask, x, y);
+        };
+
+        init();
+    };
+
+    window.TransparentJPGs = new TransparentJPGs();
+
+})(window, document);</code>
+        </pre>
+    </div>
+
+    <div class="code-block">
+        <h6>Final markup</h6>
+        <pre>
+            <code>
+&lt;figure class="item"&gt;
+    &lt;canvas class="transparent-jpg" style="background:url('img/background-1.jpg');" width="612" height="612" data-rgb="img/AM1.jpg" data-mask="img/AM1-mask.png"&gt;
+    &lt;/canvas&gt;
+&lt;/figure&gt;</code>
+        </pre>
+    </div>
+
+    <h2>Result!</h2>
+
+    <div class="example">
+    <figure class="item">
+        <canvas class="transparent-jpg" style="background:url('/assets/images/transparent-jpgs/background-1.jpg');" width="612" height="612" data-rgb="/assets/images/transparent-jpgs/AM1.jpg" data-mask="/assets/images/transparent-jpgs/AM1-mask.png">
+        </canvas>
+    </figure>
+        <p>Combined file size of images - <strong>65KB</strong></p>
+    </div>
+
+    <p>That’s an <strong>80%</strong> saving! Nearly <strong>100KB</strong> over a single PNG for no noticeable loss in image quality. There is an extra network request for the mask image and one for the JS but they are cached and used multiple multiple times.</p>
+
+    <p>I’m not sure if this is a niche application or if it can have more wide-spread uses. Also with new image formats slowly coming over the horizon we soon won’t need to do this kind of thing for much longer. If you like the idea take a look at the demo, check out the repo on <a href="https://github.com/rstphnsn/transparent-jpgs" rel="external">GitHub</a>.</p>
+
+    <div class="cta">
+        <a href="http://transparent-jpgs.stphnsn.com">Stand alone demo</a>
+    </div>
+
+    <h3>Further reading</h3>
+    <ul>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" rel="extranal">Canvas API</a></li>
+        <li><a href="http://www.html5canvastutorials.com/advanced/html5-canvas-global-composite-operations-tutorial/">HTML5 Canvas Tutorials</a></li>
+        <li><a href="https://developer.mozilla.org/samples/canvas-tutorial/6_1_canvas_composite.html" rel="external"><code>globalCompositeOperation</code></a></li>
+    </ul>
+
+
+</section>

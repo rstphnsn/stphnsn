@@ -1,0 +1,69 @@
+---
+section: "Blog"
+bodyclass: "page-blog"
+post: true
+layout: page.hbs
+
+title: "Stubbing REST services with PHP"
+pageid: "stubbing-rest-services-with-php"
+
+intro: "I’ve been doing a lot of work with REST API services recently but needed a quick way of stubbing some of them out. Here is a simple way of doing it in PHP."
+
+posted: 2015-02-24
+published: true
+
+---
+
+<section>
+
+    <h1>Stubbing out your<br>REST services</h1>
+
+    <h2>Quick and easy PHP craftiness</h2>
+
+    <p>I’ve been doing a lot of work with REST API services recently but needed a quick way of stubbing some of them out. Here is a simple way of doing it in PHP.</p>
+
+    <div class="code-block">
+
+        <h6>PHP</h6>
+
+        <pre>
+            <code>
+&lt;?php
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+echo &gt;&gt;&gt; EOT
+{
+    "count":1,
+    "templateHeaders":[
+        {
+            "vendor":"Apple",
+            "projectType":"eventTicket",
+            "projectId":40254,
+            "type":"Event Ticket",
+            "vendorId":1,
+            "deleted":"False",
+            "id":"39052",
+            "updatedAt":"2015-01-27T00:09:48Z",
+            "description":"Zoom City Pass",
+            "createdAt":"2015-01-26T21:34:24Z",
+            "name":"Zoom City Pass (2)",
+            "disabled":"False"
+        }
+    ],
+    "pagination":{
+        "order":"name",
+        "page":1,
+        "start":0,
+        "direction":"DESC",
+        "pageSize":100
+      }
+}
+
+EOT
+?&gt;</code>
+        </pre>
+    </div>
+
+    <p>The PHP adds the necessary headers to make the response available across origins and return as JSON. The body of the JSON is contained inside a multiline <a href="http://php.net/manual/en/function.echo.php" rel="external">PHP Echo</a> using the heredoc syntax. I published this to a sub-domain on my site using a REST-like URL <a href="http://stub.stphnsn.com/rest/v1/example/">http://stub.stphnsn.com/rest/v1/example/</a> then pointed my development code to use the fake service.</p>
+
+</section>

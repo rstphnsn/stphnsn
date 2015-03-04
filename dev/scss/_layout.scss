@@ -1,0 +1,72 @@
+//  ## LAYOUT  ----------------------------------------------------------------------//
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+a,
+:focus {
+    outline: none !important;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: $base--backgroundColor;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    min-height: 100%;
+}
+
+.container {
+    background: linear-gradient(#47494D, #2F3236 1000px);
+    flex: 1;
+}
+
+.no-touch .container {
+    background-attachment: fixed;
+}
+
+.main {
+    padding: 100px 0 75px;
+    position: relative;
+}
+
+section {
+    margin: 0 auto;
+    max-width: 700px;
+    padding: 0 15px;
+}
+
+
+//  ## PAGE LOAD TRANSITIONS  -------------------------------------------------------//
+
+.js.csstransitions .container {
+    opacity: 0;
+    transition: background-color 0.6s, opacity 0.6s;
+}
+
+.js.csstransitions.loaded .container {
+    opacity: 1;
+}
+
+
+//  ## MEDIA QUERIES  ---------------------------------------------------------------//
+
+@media screen and (min-width: $breakpoint-one) {
+
+    section {
+        padding: 0 30px;
+    }
+}
+
+@media screen and (min-width: $breakpoint-two) {
+
+    .main {
+        padding: 125px 0 75px;
+    }
+
+}

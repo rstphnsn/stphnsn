@@ -1,0 +1,19 @@
+//  ## DOCS  ------------------------------------------------------------------------//
+
+.intro {
+    margin: 0 auto 40px;
+}
+
+.docs {
+    padding-top: 60px;
+    margin: 0 auto 30px;
+}
+
+.docs h2:first-child {
+    border-top: 2px solid white;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-size: 1rem;
+    line-height: 1.875; // 30px
+    margin: 0 0 60px;
+}

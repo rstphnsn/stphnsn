@@ -1,0 +1,78 @@
+---
+section: "Blog"
+bodyclass: "page-blog"
+post: true
+layout: page.hbs
+
+title: "Using grunt-shell for website deployment"
+pageid: "using-grunt-shell-for-website-deployment"
+
+intro: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti."
+
+posted: 2014-11-10
+published: false
+
+---
+
+<section>
+    <h1>Using grunt-shell for website deployment</h1>
+
+    <p>So i got sick of FTP and transmit. Have a simple static sit to deploy. Automation seemed a bit excessive. Jenkins, Bamboo etc</p>
+
+    <p>Grunt build that spits out the complete site into a single html folder. includes all pages and assets. The content of this is then typically FTPd onto a MediaTemple grid serveer under a domain folder.</p>
+
+
+    <h2>Enable SSH on your server</h2>
+
+    <p>Make sure you have SSH Enabled on your server  you'll need the servername, and admin user and password later</p>
+
+    <p>For me this is a MediaTemple Grid which lets it be done in the admin.</p>
+
+
+    <h2>Install sshpass on your local machine</h2>
+
+    <p>If like me you don't get off on typing in passwords and you don't want the shell to prompt you for a password everytime you run your grunt deploy task you can install sshpass and have it send the password as part of your command.</p>
+
+    <p>Details here <a href="https://gist.github.com/arunoda/7790979">https://gist.github.com/arunoda/7790979</a></p>
+
+
+    <h2>Grunt setup</h2>
+
+    <p>Few things you need to do here:</p>
+
+
+    <h3>Install grunt-shell</h3>
+
+    <p><a href="https://github.com/sindresorhus/grunt-shell">https://github.com/sindresorhus/grunt-shell</a></p>
+
+
+
+    <h3>Keep SSH details secrect</h3>
+
+    <p>create a secrect.json file in the same directory as your grunt file</p>
+
+<pre><code>{
+    "host" : "yourdomain.com",
+    "username" : "serverAdminUsernamehere",
+    "password" : "serverAdminPasswordhere"
+}</code></pre>
+
+    <p>Add this to your grunt inside initConfig.</p>
+
+    <pre><code>secret: grunt.file.readJSON('secret.json'),</code></pre>
+
+    <p>Make sure you add the secret.json file to your <code>.gitignore</code> list so it doesn't end up in version control as it contains very important stuff.</p>
+
+
+<p>Add a grunt task like this</p>
+<pre><code>shell: {
+    deploy: {
+        command: 'sshpass -p "<%= secret.password %>" scp -r html <%= secret.username %>@<%= secret.host %>:domains/stphnsn.com'
+    }
+}</code></pre>
+
+<p>create a deploy task that runs oyur build - mine spits out a folder called html the i have shell use scp to transfer it to my server.</p>
+
+<p>Robert is your mothers brother.</p>
+
+</section>

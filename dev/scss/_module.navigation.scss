@@ -1,0 +1,51 @@
+//  ## MODULE - NAVIGATION  ---------------------------------------------------------//
+
+.site-navigation {
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 3;
+}
+
+.site-navigation ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.site-navigation li {
+    flex-grow: 1;
+    list-style: none;
+    overflow: hidden;
+}
+
+.site-navigation a {
+    background-color: #000;
+    color: #FFF;
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    height: 40px;
+    letter-spacing: 0.35em;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.site-navigation a:hover,
+.site-navigation a:focus,
+.site-navigation a:active {
+    color: #FFF;
+}
+
+
+.js.csstransitions .site-navigation a {
+    color: #000;
+    transition: color 0.6s;
+}
+
+.js.csstransitions.loaded .site-navigation a {
+    color: #FFF;
+}
