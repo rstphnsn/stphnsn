@@ -9,13 +9,17 @@ module.exports = function (grunt) {
 
         secret: grunt.file.readJSON('secret.json'),
 
-        /* assemble static site templating */
+        paths: {
+            dev: 'dev',
+            dist: 'html',
+        },
+
         assemble: {
             options: {
-                helpers: 'dev/src/templates/helpers/**/*.js',
-                assets: 'html/assets',
-                layoutdir: 'dev/src/templates/layouts/',
-                partials: 'dev/src/templates/partials/**/*.hbs',
+                helpers: '<%= paths.dev %>/src/templates/helpers/**/*.js',
+                assets: '<%= paths.dist %>/assets',
+                layoutdir: '<%= paths.dev %>/src/templates/layouts/',
+                partials: '<%= paths.dev %>/src/templates/partials/**/*.hbs',
                 collections: [{
                     name: 'post',
                     sortby: 'posted',
@@ -24,35 +28,24 @@ module.exports = function (grunt) {
             },
             pages: {
                 files: [{
-                    cwd: 'dev/src/content/',
+                    cwd: '<%= paths.dev %>/src/content/',
                     src: ['**/*.hbs', '!_articles/**/*.hbs'],
                     expand: true,
-                    dest: 'html/'
+                    dest: '<%= paths.dist %>/'
                 },
                 {
-                    cwd: 'dev/src/content/_articles/',
+                    cwd: '<%= paths.dev %>/src/content/_articles/',
                     src: ['**/*.hbs'],
                     expand: true,
-                    dest: 'html/blog/'
+                    dest: '<%= paths.dist %>/blog/'
                 }]
-            }
-        },
-
-        coffee: {
-            compile: {
-                expand: true,
-                flatten: false,
-                cwd: 'dev/js/coffee',
-                src: ['*.coffee'],
-                dest: 'dev/js/modules/',
-                ext: '.js'
             }
         },
 
         jshint: {
             gruntfile: 'Gruntfile.js',
-            app: ['dev/js/app.js', 'dev/js/modules/**/*.js', 'dev/js/pages/**/*.js'],
-            specs: ['dev/js/tests/*.js'],
+            app: ['<%= paths.dev %>/js/app.js', '<%= paths.dev %>/js/modules/**/*.js', '<%= paths.dev %>/js/pages/**/*.js'],
+            specs: ['<%= paths.dev %>/js/tests/*.js'],
             options: {
                 jshintrc: true
             }
@@ -63,19 +56,19 @@ module.exports = function (grunt) {
                 force: true /* Need force to clean beyond current working dir */
             },
             js: {
-                src: ['html/assets/js/**/*', '!html/assets/js/modernizr.custom.js']
+                src: ['<%= paths.dist %>/assets/js/**/*', '!<%= paths.dist %>/assets/js/modernizr.custom.js']
             },
             css: {
-                src: ['html/assets/css/**/*']
+                src: ['<%= paths.dist %>/assets/css/**/*']
             },
             images: {
-                src: ['html/assets/images/**/*']
+                src: ['<%= paths.dist %>/assets/images/**/*']
             },
             fonts: {
-                src: ['html/assets/fonts/**/*']
+                src: ['<%= paths.dist %>/assets/fonts/**/*']
             },
             html: {
-                src: ['html/*', '!html/assets/**']
+                src: ['<%= paths.dist %>/*', '!<%= paths.dist %>/assets/**']
             }
         },
 
@@ -85,7 +78,7 @@ module.exports = function (grunt) {
                     style: 'compressed'
                 },
                 files: {
-                    'html/assets/css/styles.css': 'dev/scss/styles.scss'
+                    '<%= paths.dist %>/assets/css/styles.css': '<%= paths.dev %>/scss/styles.scss'
                 }
             }
         },
@@ -95,31 +88,31 @@ module.exports = function (grunt) {
                 livereload: true
             },
             scss: {
-                files: ['dev/scss/*.scss'],
+                files: ['<%= paths.dev %>/scss/*.scss'],
                 tasks: ['scss']
             },
             js: {
-                files: ['dev/js/**/*.js'],
+                files: ['<%= paths.dev %>/js/**/*.js'],
                 tasks: ['js']
             },
             coffee: {
-                files: ['dev/js/**/*.coffee'],
+                files: ['<%= paths.dev %>/js/**/*.coffee'],
                 tasks: ['js']
             },
             html: {
-                files: ['dev/src/**/*.hbs'],
+                files: ['<%= paths.dev %>/src/**/*.hbs'],
                 tasks: ['assembleio']
             },
             images: {
-                files: ['dev/images/**/*'],
+                files: ['<%= paths.dev %>/images/**/*'],
                 tasks: ['images']
             },
             fonts: {
-                files: ['dev/fonts/**/*'],
+                files: ['<%= paths.dev %>/fonts/**/*'],
                 tasks: ['fonts']
             },
             root: {
-                files: ['dev/root/**/*'],
+                files: ['<%= paths.dev %>/root/**/*'],
                 tasks: ['assembleio']
             }
         },
@@ -141,12 +134,12 @@ module.exports = function (grunt) {
                 report: 'gzip'
             },
             js: {
-                src: ['dev/js/app.js', 'dev/js/modules/*.js', 'dev/js/pages/*.js'],
-                dest: 'html/assets/js/app.min.js'
+                src: ['<%= paths.dev %>/js/app.js', '<%= paths.dev %>/js/modules/*.js', '<%= paths.dev %>/js/pages/*.js'],
+                dest: '<%= paths.dist %>/assets/js/app.min.js'
             },
             libs: {
-                src: ['dev/js/libs.js', 'dev/js/libs/*.js', '!dev/js/libs/jquery-*.js', '!dev/js/libs/modernizr.js'],
-                dest: 'html/assets/js/libs.min.js'
+                src: ['<%= paths.dev %>/js/libs.js', '<%= paths.dev %>/js/libs/*.js', '!<%= paths.dev %>/js/libs/jquery-*.js', '!<%= paths.dev %>/js/libs/modernizr.js'],
+                dest: '<%= paths.dist %>/assets/js/libs.min.js'
             }
         },
 
@@ -155,51 +148,51 @@ module.exports = function (grunt) {
               separator: ';',
             },
             js: {
-                src: ['html/assets/js/jquery.js', 'html/assets/js/libs.min.js', 'html/assets/js/app.min.js'],
-                dest: 'html/assets/js/scripts.min.js'
+                src: ['<%= paths.dist %>/assets/js/jquery.js', '<%= paths.dist %>/assets/js/libs.min.js', '<%= paths.dist %>/assets/js/app.min.js'],
+                dest: '<%= paths.dist %>/assets/js/scripts.min.js'
             }
         },
 
         copy: {
             jquery: {
-                src: ['dev/js/libs/jquery-*.js'],
-                dest: 'html/assets/js/jquery.js'
+                src: ['<%= paths.dev %>/js/libs/jquery-*.js'],
+                dest: '<%= paths.dist %>/assets/js/jquery.js'
             },
             images: {
                 expand: true,
-                cwd: 'dev/images/',
+                cwd: '<%= paths.dev %>/images/',
                 src: ['**'],
-                dest: 'html/assets/images/'
+                dest: '<%= paths.dist %>/assets/images/'
             },
             fonts: {
                 expand: true,
-                cwd: 'dev/fonts/',
+                cwd: '<%= paths.dev %>/fonts/',
                 src: ['**'],
-                dest: 'html/assets/fonts/'
+                dest: '<%= paths.dist %>/assets/fonts/'
             },
             root: {
                 expand: true,
-                cwd: 'dev/root/',
+                cwd: '<%= paths.dev %>/root/',
                 src: ['**', '.htaccess'],
-                dest: 'html/'
+                dest: '<%= paths.dist %>/'
             }
         },
 
         jasmine: {
             app: {
-                src: ['dev/js/modules/*.js','dev/js/pages/*.js'],
+                src: ['<%= paths.dev %>/js/modules/*.js','<%= paths.dev %>/js/pages/*.js'],
                 options: {
-                    specs: 'dev/js/tests/*.spec.js',
-                    vendor: ['html/assets/js/modernizr.custom.js', 'html/assets/js/jquery.js', 'html/assets/js/libs.min.js'],
-                    helpers: 'dev/js/tests/*.helper.js'
+                    specs: '<%= paths.dev %>/js/tests/*.spec.js',
+                    vendor: ['<%= paths.dist %>/assets/js/modernizr.custom.js', '<%= paths.dist %>/assets/js/jquery.js', '<%= paths.dist %>/assets/js/libs.min.js'],
+                    helpers: '<%= paths.dev %>/js/tests/*.helper.js'
                 }
             }
         },
 
         modernizr: {
             site: {
-                'devFile': 'dev/js/libs/modernizr.js',
-                'outputFile': 'html/assets/js/modernizr.custom.js'
+                'devFile': '<%= paths.dev %>/js/libs/modernizr.js',
+                'outputFile': '<%= paths.dist %>/assets/js/modernizr.custom.js'
             }
         },
 
@@ -209,38 +202,7 @@ module.exports = function (grunt) {
                 map: false
             },
             site: {
-                src: 'html/assets/css/styles.css'
-            }
-        },
-
-        manifest: {
-            generate: {
-                options: {
-                    cache: [
-                        'html/assets/images/spinner.png',
-                        'html/assets/js/jquery.js',
-                        'html/assets/js/modernizr.custom.js',
-                        'html/assets/js/app.min.js',
-                        'html/assets/css/styles.css'
-                    ],
-                    network: ['*'],
-                    fallback: ['/ /offline.html'],
-                    preferOnline: false,
-                    verbose: true,
-                    timestamp: true,
-                    hash: false
-                },
-                src: [
-                    '/',
-                    'login/',
-                    'training/',
-                    'training/week-01/',
-                    'training/week-01/day-01/',
-                    'latest/',
-                    'race/',
-                    'me/'
-                ],
-                dest: 'mfc.appcache'
+                src: '<%= paths.dist %>/assets/css/styles.css'
             }
         },
 
@@ -251,38 +213,29 @@ module.exports = function (grunt) {
                     collapseWhitespace: true
                 },
                 files: [{
-                    cwd: 'html/',
-                    dest: 'html/',
+                    cwd: '<%= paths.dist %>/',
+                    dest: '<%= paths.dist %>/',
                     expand: true,
-                    src: '**/*.html'
+                    src: '**/*.<%= paths.dist %>'
                 }]
             }
         },
 
         shell: {
             deploy: {
-                command: 'sshpass -p "<%= secret.password %>" scp -r html <%= secret.username %>@<%= secret.host %>:domains/stphnsn.com'
+                command: 'sshpass -p "<%= secret.password %>" scp -r <%= paths.dist %> <%= secret.username %>@<%= secret.host %>:domains/stphnsn.com'
             }
         }
 
     });
 
-    // With AppCache
-    //grunt.registerTask('bust-appCache', ['manifest']);
-    //grunt.registerTask('js', ['clean:js', 'copy:jquery', 'uglify', 'bust-appCache']);
-    //grunt.registerTask('scss', ['clean:css', 'sass:prod', 'bust-appCache']);
-
-    // No AppCache
-    grunt.registerTask('js', ['coffee:compile', 'jshint', 'clean:js', 'copy:jquery', 'uglify:js', 'uglify:libs', 'modernizr', 'concat:js']);
+    grunt.registerTask('js', ['jshint', 'clean:js', 'copy:jquery', 'uglify:js', 'uglify:libs', 'modernizr', 'concat:js']);
     grunt.registerTask('scss', ['clean:css', 'sass:prod', 'autoprefixer:site', 'modernizr']);
-
     grunt.registerTask('images', ['clean:images', 'copy:images']);
     grunt.registerTask('fonts', ['clean:fonts', 'copy:fonts']);
-
     grunt.registerTask('assembleio', ['clean:html', 'assemble', 'copy:root', 'htmlmin']);
-    // Targets
-    grunt.registerTask('default', ['assembleio', 'js', 'scss', 'images', 'fonts']);
 
+    grunt.registerTask('default', ['assembleio', 'js', 'scss', 'images', 'fonts']);
     grunt.registerTask('deploy', ['default', 'shell']);
 
 };
