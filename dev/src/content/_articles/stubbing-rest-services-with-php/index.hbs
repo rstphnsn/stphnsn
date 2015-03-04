@@ -7,7 +7,7 @@ layout: page.hbs
 title: "Stubbing REST services with PHP"
 pageid: "stubbing-rest-services-with-php"
 
-intro: "Want to know if it’s hotter or colder than this time last year? Well now there’s an app for that."
+intro: "I’ve been doing a lot of work with REST API services recently but needed a quick way of stubbing some of them out. Here is a simple way of using PHP to do this"
 
 posted: 2015-01-18
 published: true
@@ -16,37 +16,54 @@ published: true
 
 <section>
 
-    <h1>Stubbing out your REST services</h1>
+    <h1>Stubbing out your<br>REST services</h1>
+
     <h2>Quick and easy PHP craftiness</h2>
 
-    <p>A lot of client side applications  use REST API calls to services endpoints</p> 
-
-    <p>SOme time need to stub these out so that you can developer the front end while another developer takes care of the back end.</p>
-    <p>Returning JSON</p>
-
-Headers
-    cross domain problems
-    Returning JSON response
-
-    urls
-
-    <p>multiline content <a href="http://php.net/manual/de/language.types.string.php#language.types.string.syntax.heredoc" rel="external">Heredoc syntax </a></p>
+    <p>I’ve been doing a lot of work with REST API services recently but needed a quick way of stubbing some of them out. Here is a simple way of using PHP to do this.</p>
 
     <div class="code-block">
-    <h6>PHP</h6>
+
+        <h6>PHP</h6>
+
         <pre>
             <code>
-&lt;div class="item" style="background:url('img/background-1.jpg');"&gt;
-    &lt;img src="img/AM1.png" width="306" height="306"  alt="Transparent PNG"&gt;
-&lt;/div&gt;</code>
+&lt;?php
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+echo &gt;&gt;&gt; EOT
+{
+    "count":1,
+    "templateHeaders":[
+        {
+            "vendor":"Apple",
+            "projectType":"eventTicket",
+            "projectId":40254,
+            "type":"Event Ticket",
+            "vendorId":1,
+            "deleted":"False",
+            "id":"39052",
+            "updatedAt":"2015-01-27T00:09:48Z",
+            "description":"Zoom City Pass",
+            "createdAt":"2015-01-26T21:34:24Z",
+            "name":"Zoom City Pass (2)",
+            "disabled":"False"
+        }
+    ],
+    "pagination":{
+        "order":"name",
+        "page":1,
+        "start":0,
+        "direction":"DESC",
+        "pageSize":100
+      }
+}
+
+EOT
+?&gt;</code>
         </pre>
     </div>
 
-
-
-    <div class="cta">
-        <a href="http://weather.stphnsn.com" rel="external">View the app</a>
-        <a href="https://github.com/rstphnsn/last-years-weather" rel="external">Code on GitHub</a>
-    </div>
+    <p>The PHP adds the necessary headers to make the response available to cross-origin and return as JSON. I published this to a sub-domain on my site using a REST-like URL <a href="http://stub.stphnsn.com/rest/v1/example/">http://stub.stphnsn.com/rest/v1/example/</a> then pointed my dev code to use the fake service.</p>
 
 </section>
