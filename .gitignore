@@ -1,6 +1,7 @@
 # RPS WEB BASE PROJECT
 # GIT IGNORE FILES LIST
 
+secret.json
 
 # -----------------------
 # GENERAL PROJECT IGNORES
@@ -16,12 +17,6 @@ logs/
 
 # SASS Cache files
 .sass-cache/
-
-# Generated CSS files
-html/assets/css/*.css
-
-# Generated JS Files
-html/assets/js/*.js
 
 html
 
