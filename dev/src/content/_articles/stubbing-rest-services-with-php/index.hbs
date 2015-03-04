@@ -7,9 +7,9 @@ layout: page.hbs
 title: "Stubbing REST services with PHP"
 pageid: "stubbing-rest-services-with-php"
 
-intro: "I’ve been doing a lot of work with REST API services recently but needed a quick way of stubbing some of them out. Here is a simple way of using PHP to do this"
+intro: "I’ve been doing a lot of work with REST API services recently but needed a quick way of stubbing some of them out. Here is a simple way of doing it in PHP."
 
-posted: 2015-01-18
+posted: 2015-02-24
 published: true
 
 ---
@@ -20,7 +20,7 @@ published: true
 
     <h2>Quick and easy PHP craftiness</h2>
 
-    <p>I’ve been doing a lot of work with REST API services recently but needed a quick way of stubbing some of them out. Here is a simple way of using PHP to do this.</p>
+    <p>I’ve been doing a lot of work with REST API services recently but needed a quick way of stubbing some of them out. Here is a simple way of doing it in PHP.</p>
 
     <div class="code-block">
 
@@ -64,6 +64,6 @@ EOT
         </pre>
     </div>
 
-    <p>The PHP adds the necessary headers to make the response available to cross-origin and return as JSON. I published this to a sub-domain on my site using a REST-like URL <a href="http://stub.stphnsn.com/rest/v1/example/">http://stub.stphnsn.com/rest/v1/example/</a> then pointed my dev code to use the fake service.</p>
+    <p>The PHP adds the necessary headers to make the response available across origins and return as JSON. The body of the JSON is contained inside a multiline <a href="http://php.net/manual/en/function.echo.php" rel="external">PHP Echo</a> using the heredoc syntax. I published this to a sub-domain on my site using a REST-like URL <a href="http://stub.stphnsn.com/rest/v1/example/">http://stub.stphnsn.com/rest/v1/example/</a> then pointed my development code to use the fake service.</p>
 
 </section>
