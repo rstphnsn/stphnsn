@@ -213,6 +213,7 @@ module.exports.register = function (Handlebars) {
    */
   Handlebars.registerHelper('getPosts', function (posts, thisPost, options) {
     var count = 0;
+    var debug = false;
     var endPost = 0;
     var i = 0;
     var l = 0;
@@ -227,6 +228,11 @@ module.exports.register = function (Handlebars) {
     // get page details
     if (options && options.hash && options.hash.page) {
       page = JSON.parse(options.hash.page) || {};
+    }
+
+    if (options && options.hash && options.hash.debug) {
+      debug = true;
+      console.log('debug set to true');
     }
 
     page.start = page.start || 1;
@@ -245,6 +251,10 @@ module.exports.register = function (Handlebars) {
       }
     }
 
+    if (debug) {
+      console.log('> Sort: ', sort);
+    }
+
     // sort our posts
     posts.sort(sortPosts(sort));
 
@@ -256,6 +266,10 @@ module.exports.register = function (Handlebars) {
       post = posts[i] || {};
 
       if (isPostOnPage(count, startPost, endPost)) {
+        if (debug) {
+          console.log('> ' + post.data.title, post.data.posted, count, startPost, endPost);
+        }
+
         result += options.fn({
           item: post,
           index: i
