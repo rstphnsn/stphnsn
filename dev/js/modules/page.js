@@ -1,6 +1,6 @@
 var base = base || {};
 
-base.page = (function (window, document, $) {
+base.page = (function (window, document, $, Modernizr) {
     'use strict';
 
     var $window = $(window),
@@ -171,4 +171,4 @@ base.page = (function (window, document, $) {
     $html.addClass('js');
     addListeners();
 
-})(window, window.document, window.jQuery);
+})(window, window.document, window.jQuery, window.Modernizr);
