@@ -7,57 +7,184 @@ layout: page.hbs
 title: "Alternating Boxes"
 pageid: "alternating-boxes"
 
-intro: "Making the simple look complicated using Flex box layout and :nth-child selectors"
+intro: "After discussing an idea for a simple website with one of my design colleagues the other day I took it on myself to try and build a demo of the layout we were discussing. The idea seemed simple: a responsive grid with alternating coloured sections in a checker-board pattern. Sounds easy right…"
 
-posted: 2015-03-18
-published: false
+posted: 2015-03-22
+published: true
 
 ---
 
 <section>
 
     <h1>Alternating boxes</h1>
-    <h2>Complex / Simple </h2>
+    <h2>Creating a responsive checker-board layout using :nth-child</h2>
 
-    <p>After a very brief discussing about a layout with one of my designer colleagues I started to have a look at how it could actually be made. It turned out it was a bit harder than it first sounded.</p>
+    <p>After discussing an idea for a simple website with one of my design colleagues the other day I took it on myself to try and build a demo of the layout we were discussing. The idea seemed simple: a responsive grid with alternating coloured sections in a checker-board pattern. Sounds easy right…</p>
 
-    <p>The initial concept was straight forward – an alternating grid of sections in a checker board layout. On small screens the sections would stack one on top of the other and as screen sizes get bigger the sections should align side by side in grid.</p>
+    <figure>
+        <img src="/assets/images/alternating-grid/alternating-grid.png" alt="Desired layouts">
+    </figure>
 
-    <p>####need a picture here##</p>
+    <p>1) Mobile first - single column. 2) Two column alternating sections. 3) Three column checker-board.</p>
 
-    This sounded to me like a job for <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Flexible_boxes" rel="external">flexbox layout</a>.
+    <h3>Markup</h3>
 
-    <p>I Started out, as always, with clean semantic markup. This is just as series of sections. Notice there are no presentational classes.</p>
+    <p>I wanted to keep the markup pretty clean so I used a series of <code>&lt;section&gt;</code> elements and gave each an internal content container. The number of sections would not be fixed.</p>
 
+    <div class="code-block">
+    <h6>HTML</h6>
+        <pre>
+            <code>
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;
+    &lt;title&gt;Alternating boxes&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
 
+    &lt;div class="container"&gt;
 
-    Small Screen
+        &lt;section&gt;
+            &lt;div class="section-content"&gt;
+                &lt;h1&gt;Section 1&lt;/h1&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
 
-    The Markup
+        &lt;section&gt;
+            &lt;div class="section-content"&gt;
+                &lt;h1&gt;Section 2&lt;/h1&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
 
+        &lt;section&gt;
+            &lt;div class="section-content"&gt;
+                &lt;h1&gt;Section 3&lt;/h1&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
 
+        &lt;section&gt;
+            &lt;div class="section-content"&gt;
+                &lt;h1&gt;Section 4&lt;/h1&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
 
-    Started to look at how it could be coded HTML and CSS
+        &lt;section&gt;
+            &lt;div class="section-content"&gt;
+                &lt;h1&gt;Section 5&lt;/h1&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
 
-    Responsive
+        &lt;section&gt;
+            &lt;div class="section-content"&gt;
+                &lt;h1&gt;Section 6&lt;/h1&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
 
+        ...
 
-    Drew out the options
+    &lt;/div&gt;
 
-    Break points
+&lt;/body&gt;
+&lt;/html&gt;</code>
+        </pre>
+    </div>
 
-    Flex box
+    <h3>Mobile first</h3>
 
-    nth-child and maths
+    <p>To make the single column layout I just stacked the sections and gave them a fixed height. I used <code>:nth-child(odd)</code> to change the background and foreground colours of every other <code>section</code>.</p>
 
-    Simple idea complicated?
+    <p>I started using <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Flexible_boxes" rel="external">flexbox layout</a> with the <code>align-items: center;</code> declaration to align the section content vertically.</p>
 
+    <div class="code-block">
+    <h6>CSS</h6>
+        <pre>
+            <code>
+    .container {
+        display: flex;
+        flex-flow: row wrap;
+        width: 100%;
+    }
 
-    <p></p>
+    section {
+        align-items: center;
+        background-color: #EEE;
+        box-sizing: border-box;
+        display: flex;
+        height: 300px;
+        width: 100%;
+    }
+
+    section:nth-child(odd) {
+        background-color: #111;
+        color: #EEE;
+    }       </code>
+        </pre>
+    </div>
+
+    <h3>Flexbox columns</h3>
+
+    <p>Things start to get interesting when using flexbox to flow content into columns. The <code>flex-flow: row wrap;</code> declaration on the container makes the sections flow into columns depending on how wide each one is. Setting the section width to 100% means they take up the full available width and won’t wrap. 50% wide sections wrap into a two column grid, 33.33333% makes three columns, 25% four and 20% five.</p>
+
+    <p>I added the section widths inside media queries at breakpoints that felt natural. There's no point getting all anal about choosing breakpoints based on device screen sizes. I always use the content as a guide.</p>
+
+    <p>As the source order of the sections stays the same the content flows left to right and wraps down to the next row. I needed to override the <code>:nth-child(odd)</code> style rules so I used a more specific selector to reset the colour changes and set the new widths.</p>
+
+    <div class="code-block">
+    <h6>Flexbox Columns</h6>
+        <pre>
+            <code>
+    @media screen and (min-width: 450px) {
+
+        section:nth-child(1n) {
+            background-color: #EEE;
+            color: #111;
+            width: 50%;
+        }
+
+        section:nth-child(4n+1),
+        section:nth-child(4n+4) {
+            background-color: #111;
+            color: #EEE;
+        }
+    }       </code>
+        </pre>
+    </div>
+
+    <h3>Alternating boxes</h3>
+
+    <p>In one column the black then white, odd/even CSS is straight forward. In two columns every first and every fourth section needs to be black. I used a pair of <code>:nth-child</code> selectors to set this pattern.</p>
+
+    <p>In three columns only the odd numbered sections need to be black so I went back to using <code>:nth-child(odd)</code>. In four columns the maths is a little more complex. Every 1st, 3rd, 6th and 8th section is black.</p>
+
+    <div class="code-block">
+    <h6>Four Columns</h6>
+        <pre>
+            <code>
+    @media screen and (min-width: 1350px) {
+
+        section:nth-child(1n) {
+            background-color: #EEE;
+            color: #111;
+            width: 25%;
+        }
+
+        section:nth-child(8n+1),
+        section:nth-child(8n+3),
+        section:nth-child(8n+6),
+        section:nth-child(8n+8) {
+            background-color: #111;
+            color: #EEE;
+        }
+    }       </code>
+        </pre>
+    </div>
+
+    <p>What seemed to be a simple layout proved to be a lot more challenging than I first thought. You can see the finished result - with responsive styling for one to five columns on <a href="http://codepen.io/rpstephenson/pen/YPRrPQ" rel="external">codepen</a>.
 
     <div class="cta">
         <a href="http://codepen.io/rpstephenson/pen/YPRrPQ" rel="external">VIEW CODEPEN</a>
-        <a href="https://github.com/rstphnsn/last-years-weather" rel="external">Code on GitHub</a>
     </div>
 
 </section>
