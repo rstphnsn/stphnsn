@@ -58,8 +58,14 @@ module.exports = function (grunt) {
             js: {
                 src: ['<%= paths.dist %>/assets/js/**/*', '!<%= paths.dist %>/assets/js/modernizr.custom.js']
             },
+            jspostbuild: {
+                src: ['<%= paths.dist %>/assets/js/app.min.js', '<%= paths.dist %>/assets/js/libs.min.js', '<%= paths.dist %>/assets/js/jquery.js']
+            },
             css: {
                 src: ['<%= paths.dist %>/assets/css/**/*']
+            },
+            csspostbuild: {
+                src: ['<%= paths.dist %>/assets/css/styles.css.map']
             },
             images: {
                 src: ['<%= paths.dist %>/assets/images/**/*']
@@ -229,8 +235,8 @@ module.exports = function (grunt) {
 
     });
 
-    grunt.registerTask('js', ['jshint', 'clean:js', 'copy:jquery', 'uglify:js', 'uglify:libs', 'modernizr', 'concat:js']);
-    grunt.registerTask('scss', ['clean:css', 'sass:prod', 'autoprefixer:site', 'modernizr']);
+    grunt.registerTask('js', ['jshint', 'clean:js', 'copy:jquery', 'uglify:js', 'uglify:libs', 'modernizr', 'concat:js', 'clean:jspostbuild']);
+    grunt.registerTask('scss', ['clean:css', 'sass:prod', 'autoprefixer:site', 'modernizr', 'clean:csspostbuild']);
     grunt.registerTask('images', ['clean:images', 'copy:images']);
     grunt.registerTask('fonts', ['clean:fonts', 'copy:fonts']);
     grunt.registerTask('assembleio', ['clean:html', 'assemble', 'copy:root', 'htmlmin']);
