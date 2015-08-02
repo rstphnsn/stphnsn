@@ -1,6 +1,6 @@
 var base = base || {};
 
-base.page = (function (window, document, $, Modernizr) {
+base.page = (function (window, document, $) {
     'use strict';
 
     var $window = $(window),
@@ -9,7 +9,6 @@ base.page = (function (window, document, $, Modernizr) {
         $main = $('main'),
         $title = $('title'),
         request,
-        hasHistoryAPI = Modernizr.history,
         loaded = false,
         pageTimeout,
         pageName = $main.data('page'),
@@ -85,12 +84,8 @@ base.page = (function (window, document, $, Modernizr) {
     },
 
     go = function (newPath) {
-        if (hasHistoryAPI) {
-            history.pushState('', '', newPath);
-            $window.trigger('pathchange');
-        } else {
-            window.document.location = newPath;
-        }
+        window.history.pushState('', '', newPath);
+        $window.trigger('pathchange');
     },
 
     abortExistingRequest = function (request) {
@@ -166,9 +161,10 @@ base.page = (function (window, document, $, Modernizr) {
         }
     };
 
-    $('html').on('click', 'a[href^="/"]', hijackInternalLink);
+    $html.removeClass('no-js').addClass('js');
+    if (window.history && window.history.pushState) {
+        $('html').on('click', 'a[href^="/"]', hijackInternalLink);
+        addListeners();
+    }
 
-    $html.addClass('js');
-    addListeners();
-
-})(window, window.document, window.jQuery, window.Modernizr);
+})(window, window.document, window.jQuery);

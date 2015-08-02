@@ -26,10 +26,6 @@ body {
     flex: 1;
 }
 
-.no-touch .container {
-    background-attachment: fixed;
-}
-
 .main {
     padding: 100px 0 75px;
     position: relative;
@@ -44,12 +40,12 @@ section {
 
 //  ## PAGE LOAD TRANSITIONS  -------------------------------------------------------//
 
-.js.csstransitions .container {
+.js .container {
     opacity: 0;
     transition: background-color 0.6s, opacity 0.6s;
 }
 
-.js.csstransitions.loaded .container {
+.js.loaded .container {
     opacity: 1;
 }
 
