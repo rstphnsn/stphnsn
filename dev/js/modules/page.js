@@ -161,7 +161,7 @@ base.page = (function (window, document, $) {
         }
     };
 
-    $html.removeClass('no-js').addClass('js');
+    $html.removeClass('no-js');
     if (window.history && window.history.pushState) {
         $('html').on('click', 'a[href^="/"]', hijackInternalLink);
         addListeners();
