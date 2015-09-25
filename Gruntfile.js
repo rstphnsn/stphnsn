@@ -81,7 +81,7 @@ module.exports = function (grunt) {
         sass: {
             prod: {
                 options: {
-                    style: 'compact'
+                    style: 'compressed'
                 },
                 files: {
                     '<%= paths.dist %>/assets/css/styles.css': '<%= paths.dev %>/scss/styles.scss'
