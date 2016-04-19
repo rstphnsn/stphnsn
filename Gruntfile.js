@@ -101,10 +101,6 @@ module.exports = function (grunt) {
                 files: ['<%= paths.dev %>/js/**/*.js'],
                 tasks: ['js']
             },
-            coffee: {
-                files: ['<%= paths.dev %>/js/**/*.coffee'],
-                tasks: ['js']
-            },
             html: {
                 files: ['<%= paths.dev %>/src/**/*.hbs'],
                 tasks: ['assembleio']
@@ -235,8 +231,8 @@ module.exports = function (grunt) {
 
     });
 
-    grunt.registerTask('js', ['jshint', 'clean:js', 'copy:jquery', 'uglify:js', 'uglify:libs', 'modernizr', 'concat:js', 'clean:jspostbuild']);
-    grunt.registerTask('scss', ['clean:css', 'sass:prod', 'autoprefixer:site', 'modernizr', 'clean:csspostbuild']);
+    grunt.registerTask('js', ['jshint', 'clean:js', 'copy:jquery', 'uglify:js', 'uglify:libs', 'concat:js', 'clean:jspostbuild']);
+    grunt.registerTask('scss', ['clean:css', 'sass:prod', 'autoprefixer:site', 'clean:csspostbuild']);
     grunt.registerTask('images', ['clean:images', 'copy:images']);
     grunt.registerTask('fonts', ['clean:fonts', 'copy:fonts']);
     grunt.registerTask('assembleio', ['clean:html', 'assemble', 'copy:root', 'htmlmin']);
