@@ -1,0 +1,30 @@
+.page-cv .nav-in-section {
+    width: 100%;
+    float: left;
+    margin: -25px 0 40px;
+}
+
+.page-cv .nav-in-section .cta {
+    float: left;
+    margin: 0 0 10px;
+}
+
+.page-cv .nav-in-section .cta a {
+    padding: 0 20px;
+    line-height: 30px;
+}
+
+.page-cv .nav-in-section .cta-active a {
+    background-color: $base--ctaColorHover;
+    border-color: $base--ctaColorHover;
+}
+
+.page-cv .date-range {
+    display: block;
+    font-size: 1rem;
+    line-height: 2;
+}
+
+.page-cv .role ul {
+    margin-top: -15px;
+}
