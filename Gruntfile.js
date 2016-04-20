@@ -2,7 +2,7 @@ module.exports = function (grunt) {
     'use strict';
 
     require('load-grunt-tasks')(grunt, {
-        pattern: ['assemble', 'grunt-*']
+        pattern: ['grunt-*']
     });
 
     grunt.initConfig({
@@ -202,6 +202,16 @@ module.exports = function (grunt) {
             }
         },
 
+        connect: {
+            dev: {
+                options: {
+                    port: 3000,
+                    base: './html',
+                    hostname: '0.0.0.0'
+                }
+            }
+        }
+
     });
 
     grunt.registerTask('js', ['jshint', 'clean:js', 'copy:jquery', 'uglify:js', 'uglify:libs', 'concat:js', 'clean:jspostbuild']);
@@ -211,5 +221,7 @@ module.exports = function (grunt) {
     grunt.registerTask('assembleio', ['clean:html', 'assemble', 'copy:root', 'htmlmin']);
 
     grunt.registerTask('default', ['assembleio', 'js', 'scss', 'images', 'fonts']);
+
+    grunt.registerTask('dev', ['assembleio', 'js', 'scss', 'images', 'fonts', 'connect:dev', 'watch']);
 
 };
