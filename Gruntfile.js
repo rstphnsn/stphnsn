@@ -2,12 +2,10 @@ module.exports = function (grunt) {
     'use strict';
 
     require('load-grunt-tasks')(grunt, {
-        pattern: ['assemble', 'grunt-*', '!grunt-template-jasmine-istanbul']
+        pattern: ['assemble', 'grunt-*']
     });
 
     grunt.initConfig({
-
-        secret: grunt.file.readJSON('secret.json'),
 
         paths: {
             dev: 'dev',
@@ -45,7 +43,6 @@ module.exports = function (grunt) {
         jshint: {
             gruntfile: 'Gruntfile.js',
             app: ['<%= paths.dev %>/js/app.js', '<%= paths.dev %>/js/modules/**/*.js', '<%= paths.dev %>/js/pages/**/*.js'],
-            specs: ['<%= paths.dev %>/js/tests/*.js'],
             options: {
                 jshintrc: true
             }
@@ -56,7 +53,7 @@ module.exports = function (grunt) {
                 force: true /* Need force to clean beyond current working dir */
             },
             js: {
-                src: ['<%= paths.dist %>/assets/js/**/*', '!<%= paths.dist %>/assets/js/modernizr.custom.js']
+                src: ['<%= paths.dist %>/assets/js/**/*']
             },
             jspostbuild: {
                 src: ['<%= paths.dist %>/assets/js/app.min.js', '<%= paths.dist %>/assets/js/libs.min.js', '<%= paths.dist %>/assets/js/jquery.js']
@@ -140,7 +137,7 @@ module.exports = function (grunt) {
                 dest: '<%= paths.dist %>/assets/js/app.min.js'
             },
             libs: {
-                src: ['<%= paths.dev %>/js/libs.js', '<%= paths.dev %>/js/libs/*.js', '!<%= paths.dev %>/js/libs/jquery-*.js', '!<%= paths.dev %>/js/libs/modernizr.js'],
+                src: ['<%= paths.dev %>/js/libs.js', '<%= paths.dev %>/js/libs/*.js', '!<%= paths.dev %>/js/libs/jquery-*.js'],
                 dest: '<%= paths.dist %>/assets/js/libs.min.js'
             }
         },
@@ -180,24 +177,6 @@ module.exports = function (grunt) {
             }
         },
 
-        jasmine: {
-            app: {
-                src: ['<%= paths.dev %>/js/modules/*.js','<%= paths.dev %>/js/pages/*.js'],
-                options: {
-                    specs: '<%= paths.dev %>/js/tests/*.spec.js',
-                    vendor: ['<%= paths.dist %>/assets/js/modernizr.custom.js', '<%= paths.dist %>/assets/js/jquery.js', '<%= paths.dist %>/assets/js/libs.min.js'],
-                    helpers: '<%= paths.dev %>/js/tests/*.helper.js'
-                }
-            }
-        },
-
-        modernizr: {
-            site: {
-                'devFile': '<%= paths.dev %>/js/libs/modernizr.js',
-                'outputFile': '<%= paths.dist %>/assets/js/modernizr.custom.js'
-            }
-        },
-
         autoprefixer: {
             options: {
                 browsers: ['last 2 version', '> 1%', 'ff esr', 'ie >= 8', 'ios >= 5', 'android >= 2.3'],
@@ -223,12 +202,6 @@ module.exports = function (grunt) {
             }
         },
 
-        shell: {
-            deploy: {
-                command: 'sshpass -p "<%= secret.password %>" scp -r <%= paths.dist %> <%= secret.username %>@<%= secret.host %>:domains/stphnsn.com'
-            }
-        }
-
     });
 
     grunt.registerTask('js', ['jshint', 'clean:js', 'copy:jquery', 'uglify:js', 'uglify:libs', 'concat:js', 'clean:jspostbuild']);
@@ -238,6 +211,5 @@ module.exports = function (grunt) {
     grunt.registerTask('assembleio', ['clean:html', 'assemble', 'copy:root', 'htmlmin']);
 
     grunt.registerTask('default', ['assembleio', 'js', 'scss', 'images', 'fonts']);
-    grunt.registerTask('deploy', ['default', 'shell']);
 
 };
