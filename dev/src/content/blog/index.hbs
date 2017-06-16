@@ -16,7 +16,6 @@ layout: page.hbs
 {{#getPosts this.pages ../this filter='{"section": "Blog", "post": true, "published": true}' sort='{"property": "posted", "order": "desc"}' page='{"start": 1, "length": 10}' }}
     <article class="feed-item">
         <h2><a href="{{ replaceStr this.item.dirname 'html' '' }}">{{this.item.data.title}}</a></h2>
-        <p><time itemprop="dateCreated" datetime="{{formatDate this.item.data.posted "%Y/%m/%d"}}">{{formatDate this.item.data.posted "%e %B %Y"}}</time></p>
         <p>{{this.item.data.intro}}</p>
         <div class="cta">
             <a href="{{ replaceStr this.item.dirname 'html' '' }}">Read more</a>
