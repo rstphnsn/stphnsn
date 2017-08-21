@@ -23,3 +23,18 @@ This provides a local connect server on:
 `http://localhost:3000`
 
 Do your work in the `dev` folder. Grunt will push changes into the HTML folder. LiveReload is supported.
+
+
+## TODO
+
+Update CV section - Add ThoughtWorks
+
+Recent projects - summarise what iv'de been doing with Ionic React and product development
+
+Blog post -
+
+Old School Rapid prototyping with express
+
+Securing express with http - whatever
+
+
